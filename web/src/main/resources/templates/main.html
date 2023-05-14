@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome</title>
+</head>
+<body>
+<h1>Welcome, <span th:text="${user.login}"></span>!</h1>
+<p>Your email is <span th:text="${user.email}"></span>.</p>
+<hr>
+<h1>Available vehicles</h1>
+  <div th:each="vehicle : ${vehicles}">
+      <p th:text="${vehicle.CAR_BRAND + ' ' + vehicle.CAR_YEAR}">Vehicle</p>
+  </div>
+<hr>
+    <form th:action="@{/new-vehicle}">
+        <button type="submit">
+            <label>New vehicle</label>
+        </button>
+    </form>
+<hr>
+<a href="new-vehicle">New vehicle</a>
+</body>
+</html>
+
