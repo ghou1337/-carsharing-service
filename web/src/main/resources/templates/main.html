@@ -3,23 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <title>Welcome</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-<h1>Welcome, <span th:text="${user.login}"></span>!</h1>
-<p>Your email is <span th:text="${user.email}"></span>.</p>
+<div class="header">
+    <div class="logo">
+
+    </div>
+    <div class="nav">
+        <a class="link-button" href="#">Rejestracja</a>
+        <a class="link-button" href="#">Zaloguj się</a>
+    </div>
+</div>
 <hr>
-<h1>Available vehicles</h1>
-  <div th:each="vehicle : ${vehicles}">
-      <p th:text="${vehicle.CAR_BRAND + ' ' + vehicle.CAR_YEAR}">Vehicle</p>
-  </div>
-<hr>
-    <form th:action="@{/new-vehicle}">
-        <button type="submit">
-            <label>New vehicle</label>
-        </button>
-    </form>
-<hr>
-<a href="new-vehicle">New vehicle</a>
+<div class="description" th:each="rentedVehicle : ${rentedUserVehicle}">
+    <h1>Available vehicles</h1>
+    <p th:text="'Your rented vehicle is:' + ${rentedVehicle.CAR_BRAND}">Rented user vehicle</p>
+</div>
+<div class="container">
+    <div class="table">
+        <div class="table-row">
+            <div class="table-cell" th:each="vehicle : ${vehicles}">
+                <p th:text="${vehicle.getCAR_BRAND() + '  ' + vehicle.getCAR_YEAR() + ' price:'+ vehicle.getPRICE_RENT() + ' zł/dzień '}">Vehicle</p>
+                <form th:method="PATCH" th:action="@{/main/{id}(id=${vehicle.getID()})}">
+                    <input value="Rent a vehicle" type="submit" class="button">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<form th:action="@{/new-vehicle}" id="btnSubmitBody">
+    <input value="New vehicle" type="submit" class="button"/>
+</form>
 </body>
 </html>
 

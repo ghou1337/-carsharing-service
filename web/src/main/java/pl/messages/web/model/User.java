@@ -5,14 +5,17 @@ public class User {
     private int id;
     private String login;
     private String password;
+    private String email;
+    private int rentedCarID;
 
     public User() {
     }
 
-    public User(int id, String login, String password, String email) {
+    public User(int id, String login, String password, int rentedCarID, String email) {
         this.id = id;
         this.login = login;
         this.password = password;
+        this.rentedCarID = rentedCarID;
         this.email = email;
     }
 
@@ -48,5 +51,11 @@ public class User {
         this.email = email;
     }
 
-    private String email;
+    public int getRentedCarID() {
+        return rentedCarID;
+    }
+
+    public void setRentedCarID(int rentedCarID) {
+        this.rentedCarID = rentedCarID;
+    }
 }

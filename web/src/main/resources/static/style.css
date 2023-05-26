@@ -1,0 +1,71 @@
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, dl, dt, dd,
+ol, ul, li, form, table, caption, tr, th, td, article, aside, footer, header{
+
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+/* Стили для заголовка и описания */
+/* Стили для заголовка */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f1f1f1;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav {
+    display: flex;
+}
+
+.nav a {
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+/* Стили для блоков регистрации и входа */
+.registration,
+.login {
+    padding: 10px;
+    background-color: #f1f1f1;
+    text-align: center;
+}
+
+.description {
+    text-align: center;
+    padding: 10px;
+    font-style: italic;
+}
+
+
+h1 {
+    color: black;
+}
+
+body {
+    background-color: antiquewhite;
+    backdrop-filter: sepia(30%);
+}
+
+.table {
+    display: table;
+}
+
+.table-row {
+    display: table-row;
+}
+
+.table-cell {
+    display: table-cell;
+    border: 1px solid black;
+    padding: 5px;
+}

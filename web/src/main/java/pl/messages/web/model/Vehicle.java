@@ -1,12 +1,22 @@
 package pl.messages.web.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+
 public class Vehicle {
-    private int CAR_ID;
+    private int ID;
     private String CAR_BRAND;
     private int PRICE_RENT;
     private int CAR_YEAR;
 
     public Vehicle() {
+    }
+
+    public Vehicle(int ID, String CAR_BRAND, int PRICE_RENT, int CAR_YEAR) {
+        this.ID = ID;
+        this.CAR_BRAND = CAR_BRAND;
+        this.PRICE_RENT = PRICE_RENT;
+        this.CAR_YEAR = CAR_YEAR;
     }
 
     public String getCAR_BRAND() {
@@ -33,18 +43,11 @@ public class Vehicle {
         this.CAR_YEAR = CAR_YEAR;
     }
 
-    public int getCAR_ID() {
-        return CAR_ID;
+    public int getID() {
+        return ID;
     }
 
-    public void setCAR_ID(int CAR_ID) {
-        this.CAR_ID = CAR_ID;
-    }
-
-    public Vehicle(String CAR_BRAND, int PRICE_RENT, int CAR_YEAR, int CAR_ID) {
-        this.CAR_BRAND = CAR_BRAND;
-        this.PRICE_RENT = PRICE_RENT;
-        this.CAR_YEAR = CAR_YEAR;
-        this.CAR_ID = CAR_ID;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 }

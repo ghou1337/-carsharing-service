@@ -1,14 +1,10 @@
 package pl.messages.web.controller;
 
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.messages.web.dao.UserDAO;
 import pl.messages.web.dao.VehicleDAO;
 import pl.messages.web.model.Vehicle;
@@ -16,17 +12,17 @@ import pl.messages.web.model.Vehicle;
 @Controller
 public class MainPageController {
     private final VehicleDAO vehicleDAO;
-    private final UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Autowired
-    public MainPageController(VehicleDAO vehicleDAO, UserDAO userDAO) {
+    public MainPageController(VehicleDAO vehicleDAO, UserDAO userDao) {
         this.vehicleDAO = vehicleDAO;
-        this.userDAO = userDAO;
+        this.userDAO = userDao;
     }
     @GetMapping("/main")
-    public String index(UserDAO user, Model model) {
+    public String index(Model model) {
         model.addAttribute("vehicles", vehicleDAO.index());
-        model.addAttribute("user", userDAO.currentUser());
+        model.addAttribute("rentedUserVehicle", vehicleDAO.rentVehicle());
         return "main";
     }
 
@@ -38,6 +34,12 @@ public class MainPageController {
     @PostMapping("/new-vehicle")
     public String addCar(@ModelAttribute("vehicle") Vehicle vehicle) {
         vehicleDAO.addNewCar(vehicle);
+        return "redirect:/main";
+    }
+
+    @PatchMapping("/main/{id}")
+    public String rentVehicle(@PathVariable("id") int id) {
+        vehicleDAO.userVehicle(id);
         return "redirect:/main";
     }
 }
