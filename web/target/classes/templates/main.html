@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="header">
+    <div class="logo">
+
+    </div>
+    <div class="nav">
+        <a class="link-button" href="#">Rejestracja</a>
+        <a class="link-button" href="#">Zaloguj się</a>
+    </div>
+</div>
+<hr>
+<div class="description" th:each="rentedVehicle : ${rentedUserVehicle}">
+    <h1>Available vehicles</h1>
+    <p th:text="'Your rented vehicle is:' + ${rentedVehicle.CAR_BRAND}">Rented user vehicle</p>
+</div>
+<div class="container">
+    <div class="table">
+        <div class="table-row">
+            <div class="table-cell" th:each="vehicle : ${vehicles}">
+                <p th:text="${vehicle.getCAR_BRAND() + '  ' + vehicle.getCAR_YEAR() + ' price:'+ vehicle.getPRICE_RENT() + ' zł/dzień '}">Vehicle</p>
+                <form th:method="PATCH" th:action="@{/main/{id}(id=${vehicle.getID()})}">
+                    <input value="Rent a vehicle" type="submit" class="button">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<form th:action="@{/new-vehicle}" id="btnSubmitBody">
+    <input value="New vehicle" type="submit" class="button"/>
+</form>
+</body>
+</html>
+
