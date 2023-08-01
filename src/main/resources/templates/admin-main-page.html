@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{main.css}"/>
+</head>
+<body>
+<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name" style="color: chocolate">thymeleaf</span>!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out" class="input-reject"/>
+</form>
+<h1>Loggined user: </h1>
+<div th:each="everycars: ${user_car}">
+    <p th:text="${everycars.getCARBRAND()}">
+    <form th:method="DELETE" th:action="@{main/delete/{id}(id=${everycars.getID()})}">
+        <input value="Complete the lease" type="submit" class="input-reject">
+    </form>
+    </p>
+</div>
+<hr>
+<h3>All cars for rent</h3>
+<form>
+    <input type="text" name="carBrand" placeholder="Search by Car Brand"/>
+    <button type="submit"><S>Search</S></button>
+    <a th:href="@{/main}" class="input-reject">Reset</a>
+</form>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Car Brand</th>
+        <th>Rent</th>
+    </tr>
+    <tr th:each="vehicle : ${vehicles}">
+        <td th:text="${vehicle.getCARBRAND()}"></td>
+        <td th:text="${vehicle.getPRICE_RENT()}"></td>
+        <td>
+            <form th:method="PATCH" th:action="@{main/{id}(id=${vehicle.getID()})}">
+                <input value="Rent a vehicle" type="submit" class="button">
+            </form>
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
