@@ -31,8 +31,4 @@ public class UserService {
         Optional<Vehicle> vehicle = vehicleRepo.findById(carId);
         return vehicle.get();
     }
-
-//    public Vehicle getUserCarBrand(User user) {
-//        userRepo.findByRentedVehicle(user);
-//    }
 }

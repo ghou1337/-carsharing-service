@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.hibernate.study.demo.model.User;
 import pl.hibernate.study.demo.model.Vehicle;
 import pl.hibernate.study.demo.repos.VehicleRepo;
 import pl.hibernate.study.demo.service.UserService;
@@ -12,6 +13,7 @@ import pl.hibernate.study.demo.service.VehicleService;
 import java.util.List;
 
 @Controller
+//@RequestMapping("/main")
 public class MainPageController {
     private final UserService userService;
 
@@ -55,6 +57,7 @@ public class MainPageController {
         }
         model.addAttribute("vehicles", vehicles);
         model.addAttribute("user_car", vehicleService.getUserCar(userService.findUserById(1)));
+        model.addAttribute("user_data", userService.findUserById(1));
         return "main";
     }
 }

@@ -10,42 +10,42 @@
     <link rel="stylesheet" th:href="@{main.css}"/>
 </head>
 <body>
-<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name" style="color: chocolate">thymeleaf</span>!</h1>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out" class="input-reject"/>
-    </form>
-    <h1>Loggined user: </h1>
-        <div th:each="everycars: ${user_car}">
-            <p th:text="${everycars.getCARBRAND()}">
-                <form th:method="DELETE" th:action="@{main/delete/{id}(id=${everycars.getID()})}">
-                    <input value="Complete the lease" type="submit" class="input-reject">
-                </form>
-            </p>
-        </div>
-    <hr>
-    <h3>All cars for rent</h3>
-    <form>
-        <input type="text" name="carBrand" placeholder="Search by Car Brand"/>
-        <button type="submit"><S>Search</S></button>
-        <a th:href="@{/main}" class="input-reject">Reset</a>
-    </form>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Car Brand</th>
-            <th>Rent</th>
-        </tr>
-        <tr th:each="vehicle : ${vehicles}">
-            <td th:text="${vehicle.getCARBRAND()}"></td>
-            <td th:text="${vehicle.getPRICE_RENT()}"></td>
-            <td>
-                <form th:method="PATCH" th:action="@{main/{id}(id=${vehicle.getID()})}">
-                    <input value="Rent a vehicle" type="submit" class="button">
-                </form>
-            </td>
-            <td>
-            </td>
-        </tr>
-    </table>
+<h1>Hello, <label th:text="${user_data.getName()}"/></h1>
+<!--<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span></h1>-->
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out" class="input-reject"/>
+</form>
+    <div th:each="everycars: ${user_car}">
+        <p th:text="${everycars.getCARBRAND()}">
+            <form th:method="DELETE" th:action="@{main/delete/{id}(id=${everycars.getID()})}">
+                <input value="Complete the lease" type="submit" class="input-reject">
+            </form>
+        </p>
+    </div>
+<hr>
+<h3>All cars for rent</h3>
+<form>
+    <input type="text" name="carBrand" placeholder="Search by Car Brand"/>
+    <button type="submit">Search</button>
+    <a th:href="@{/main}" class="input-reject">Reset</a>
+</form>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Car Brand</th>
+        <th>Rent</th>
+    </tr>
+    <tr th:each="vehicle : ${vehicles}">
+        <td th:text="${vehicle.getCARBRAND()}"></td>
+        <td th:text="${vehicle.getPRICE_RENT()}"></td>
+        <td>
+            <form th:method="PATCH" th:action="@{main/{id}(id=${vehicle.getID()})}">
+                <input value="Rent a vehicle" type="submit" class="button">
+            </form>
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
 </body>
 </html>
