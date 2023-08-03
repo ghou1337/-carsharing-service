@@ -17,6 +17,7 @@ input[type="text"] {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
 .input-reject {
     padding: 5px 10px;
     background-color: indianred;
@@ -54,3 +55,15 @@ tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
+.message{
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

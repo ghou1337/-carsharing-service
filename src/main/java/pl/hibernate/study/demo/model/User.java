@@ -1,8 +1,6 @@
 package pl.hibernate.study.demo.model;
 
 import jakarta.persistence.*;
-import org.springframework.boot.context.properties.bind.Name;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -28,25 +26,26 @@ public class User {
     @Size(min = 3, max = 30, message = "Login should be grater then 3 characters")
     @Column(name = "email")
     private String email;
-
     @Column(name = "name")
     private String name;
-
     @Column(name = "permissions")
     private String permissions;
+    @Column(name = "money")
+    private float money;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userVehicle")
     private List<Vehicle> rentedVehicle;
 
     public User() {
     }
 
-    public User(int id, String login, String password, String email, String name, String permissions) {
+    public User(int id, String login, String password, String email, String name, String permissions, float money) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.email = email;
         this.name = name;
         this.permissions = permissions;
+        this.money = money;
     }
 
     public String getName() {
@@ -103,5 +102,13 @@ public class User {
 
     public void setPermissions(String permissions) {
         this.permissions = permissions;
+    }
+
+    public float getMoney() {
+        return money;
+    }
+
+    public void setMoney(float money) {
+        this.money = money;
     }
 }

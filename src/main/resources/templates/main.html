@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,17 +9,20 @@
     <link rel="stylesheet" th:href="@{main.css}"/>
 </head>
 <body>
-<h1>Hello, <label th:text="${user_data.getName()}"/></h1>
-<!--<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span></h1>-->
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out" class="input-reject"/>
-</form>
+<div class="user-nav">
+    <h1>Hello, <label th:text="${user_data.getName()}"/></h1>
+    <div th:if="${error_message}" style="color: red;" class="message"><p th:text="${error_message}">message</p></div>
+    <div th:if="${success_message}" style="color: green;" class="message"><p th:text="${success_message}">message</p></div>
+    <h1>Your money: <span th:text="${#strings.replace(user_data.getMoney(), '.', ',')} + '$'"/></h1>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out" class="input-reject"/>
+    </form>
+</div>
     <div th:each="everycars: ${user_car}">
-        <p th:text="${everycars.getCARBRAND()}">
-            <form th:method="DELETE" th:action="@{main/delete/{id}(id=${everycars.getID()})}">
-                <input value="Complete the lease" type="submit" class="input-reject">
-            </form>
-        </p>
+        <p th:text="${everycars.getCARBRAND()}"/>
+        <form th:method="DELETE" th:action="@{main/delete/{id}(id=${everycars.getID()})}">
+            <input value="Complete the lease" type="submit" class="input-reject">
+        </form>
     </div>
 <hr>
 <h3>All cars for rent</h3>
@@ -31,8 +33,8 @@
 </form>
 <table>
     <tr>
-        <th>ID</th>
-        <th>Car Brand</th>
+        <th>Car brand</th>
+        <th>Price rent</th>
         <th>Rent</th>
     </tr>
     <tr th:each="vehicle : ${vehicles}">
