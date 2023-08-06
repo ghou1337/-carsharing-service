@@ -1,6 +1,7 @@
 package pl.hibernate.study.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.hibernate.study.demo.model.User;
@@ -27,8 +28,18 @@ public class UserService {
         return usergaga.get();
     }
 
+    public Optional<User> findUserByLogin(String username) {
+        Optional<User> user = userRepo.findByLogin(username);
+        return user;
+    }
+
     public Vehicle getUserCar(int userId, int carId) {
         Optional<Vehicle> vehicle = vehicleRepo.findById(carId);
         return vehicle.get();
+    }
+
+    public void register(User user){
+        user.setPermissions("USER");
+        userRepo.save(user);
     }
 }
