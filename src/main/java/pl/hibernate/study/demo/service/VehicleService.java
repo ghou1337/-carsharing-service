@@ -13,17 +13,20 @@ import java.util.List;
 @Service
 @Transactional
 public class VehicleService {
-    @Autowired
-    private VehicleRepo vehicleRepo;
+    private final VehicleRepo vehicleRepo;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public VehicleService(VehicleRepo vehicleRepo, UserService userService) {
+        this.vehicleRepo = vehicleRepo;
+        this.userService = userService;
+    }
 
     public List<Vehicle> searchCar(String brand) {
         return vehicleRepo.getVehicleByCARBRAND(brand);
     }
-    public List<Vehicle> getUserCar(User user) {
-        return vehicleRepo.getVehicleByUserVehicle(user);
+    public List<Vehicle> getUserCar() {
+        return vehicleRepo.getVehicleByUserVehicle(userService.getAuthenticatedUser());
     }
 
     public List<Vehicle> getAllCars() {
@@ -37,11 +40,11 @@ public class VehicleService {
             throw new RuntimeException("Car wan not found");
     }
     public void saveUserCar(User user, int carId) throws NotEnoughBalanceException {
-        User userRenter = userService.findUserById(1);
+        User userRenter = userService.getAuthenticatedUser();
         float actualMoney = userRenter.getMoney();
-        int priceRent = getCarById(carId).getPRICE_RENT();
+        float priceRent = getCarById(carId).getPRICE_RENT();
         if (actualMoney >= priceRent) {
-            userRenter.setMoney(actualMoney - priceRent);
+            userService.getAuthenticatedUser().setMoney(actualMoney - priceRent);
             vehicleRepo.setUserCar(user, carId);
         } else {
             throw new NotEnoughBalanceException("Not enough money for the rent!");

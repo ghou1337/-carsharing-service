@@ -1,11 +1,14 @@
 package pl.hibernate.study.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.hibernate.study.demo.model.Vehicle;
+import pl.hibernate.study.demo.security.config.UserDetailsConfig;
 import pl.hibernate.study.demo.service.UserService;
 import pl.hibernate.study.demo.service.VehicleService;
 import pl.hibernate.study.demo.service.exe.NotEnoughBalanceException;
@@ -32,15 +35,15 @@ public class MainPageController {
             vehicles = vehicleService.getAllCars();
         }
         model.addAttribute("vehicles", vehicles);
-        model.addAttribute("user_car", vehicleService.getUserCar(userService.findUserById(1)));
-        model.addAttribute("user_data", userService.findUserById(1));
+        model.addAttribute("user_car", vehicleService.getUserCar());
+        model.addAttribute("user_data", userService.getAuthenticatedUser());
         return "main";
     }
 
     @PatchMapping("/main/{id}")
     public String updateCar(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
         try {
-            vehicleService.saveUserCar(userService.findUserById(1), id);
+            vehicleService.saveUserCar(userService.getAuthenticatedUser(), id);
             redirectAttributes.addFlashAttribute("success_message", "The car was successfully rented!");
         } catch (NotEnoughBalanceException e) {
             redirectAttributes.addFlashAttribute("error_message", e.getMessage() );
@@ -53,11 +56,4 @@ public class MainPageController {
         vehicleService.deleteUserCar(id);
         return "redirect:/main";
     }
-
-    //    @GetMapping("/showUserInfo")
-//    public String showUserInfo() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-////        UserDetailsConfig userDetailsConfig = (UserDetailsConfig)authentication.getPrincipal();
-//        return "redirect:/main";
-//    }
 }
