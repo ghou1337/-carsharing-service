@@ -1,19 +1,12 @@
-package pl.hibernate.study.demo.security.config;
+package pl.hibernate.study.demo.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import pl.hibernate.study.demo.model.User;
 
 import java.util.Collection;
 
-public class UserDetailsConfig implements UserDetails {
-    private final User user;
-
-    public UserDetailsConfig(User user) {
-        this.user = user;
-    }
+public record UserDetailsConfig(User user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -48,10 +41,5 @@ public class UserDetailsConfig implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    // Получение объекта User(сущность), возврат сущности которую мы оборачиваем.
-    public User getUser() {
-        return this.user;
     }
 }

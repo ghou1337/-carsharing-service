@@ -1,51 +1,46 @@
 package pl.hibernate.study.demo.service;
 
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.hibernate.study.demo.model.User;
-import pl.hibernate.study.demo.model.Vehicle;
 import pl.hibernate.study.demo.repos.UserRepo;
-import pl.hibernate.study.demo.repos.VehicleRepo;
-import pl.hibernate.study.demo.security.config.UserDetailsConfig;
+import pl.hibernate.study.demo.security.UserDetailsConfig;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class UserService {
     private final UserRepo userRepo;
-    private final VehicleRepo vehicleRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepo userRepo, VehicleRepo vehicleRepo) {
+    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
-        this.vehicleRepo = vehicleRepo;
+        this.passwordEncoder = passwordEncoder;
     }
-
-    public List<User> findAllUsers() {
-        return  userRepo.findAll();
-    }
-
     public User findUserById(int id) {
-        Optional<User> user = userRepo.findById(id);
-        return user.get();
+        return userRepo.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + id));
     }
 
     public Optional<User> findUserByLogin(String username) {
-        Optional<User> user = userRepo.findByLogin(username);
-        return user;
+        return userRepo.findByLogin(username);
     }
 
     public void register(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setPermissions("USER");
         userRepo.save(user);
     }
 
-    public User getAuthenticatedUser(){
+    public User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsConfig userDetailsConfig = (UserDetailsConfig)authentication.getPrincipal();
-        return findUserById(userDetailsConfig.getUser().getId());
+        return findUserById(userDetailsConfig.user().getId());
     }
 }
