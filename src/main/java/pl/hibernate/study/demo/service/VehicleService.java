@@ -22,8 +22,12 @@ public class VehicleService {
         this.userService = userService;
     }
 
+    public void saveCar(Vehicle vehicle) {
+        vehicleRepo.save(vehicle);
+    }
+
     public List<Vehicle> searchCar(String brand) {
-        return vehicleRepo.getVehicleByCARBRAND(brand);
+        return vehicleRepo.getVehicleByCarBrand(brand);
     }
     public List<Vehicle> getUserCar() {
         return vehicleRepo.getVehicleByUserVehicle(userService.getAuthenticatedUser());
@@ -42,7 +46,7 @@ public class VehicleService {
     public void saveUserCar(User user, int carId) throws NotEnoughBalanceException {
         User userRenter = userService.getAuthenticatedUser();
         float actualMoney = userRenter.getMoney();
-        float priceRent = getCarById(carId).getPRICE_RENT();
+        float priceRent = getCarById(carId).getPriceRent();
         if (actualMoney >= priceRent) {
             userService.getAuthenticatedUser().setMoney(actualMoney - priceRent);
             vehicleRepo.setUserCar(user, carId);

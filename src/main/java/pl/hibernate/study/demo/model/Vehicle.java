@@ -3,6 +3,8 @@ package pl.hibernate.study.demo.model;
 import jakarta.persistence.*;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "vehicles")
@@ -14,55 +16,25 @@ public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int ID;
-    @NotEmpty(message = "Shouldn't be empty")
+    private int id;
+    @NotEmpty(message = "Car brand shouldn't be empty")
     @Column(name = "car_brand")
-    private String CARBRAND;
+    private String carBrand;
+    @NotNull(message = "Price shouldn't be empty")
     @Column(name = "price_rent")
-    private int PRICE_RENT;
+    private int priceRent;
+    @NotNull(message = "Car year shouldn't be empty")
     @Column(name = "car_year")
-    private int CAR_YEAR;
+    private int carYear;
 
     public Vehicle() {
     }
 
-    public Vehicle(int ID, String CAR_BRAND, int PRICE_RENT, int CAR_YEAR) {
-        this.ID = ID;
-        this.CARBRAND = CAR_BRAND;
-        this.PRICE_RENT = PRICE_RENT;
-        this.CAR_YEAR = CAR_YEAR;
-    }
-
-    public String getCARBRAND() {
-        return CARBRAND;
-    }
-
-    public void setCAR_BRAND(String CAR_BRAND) {
-        this.CARBRAND = CAR_BRAND;
-    }
-
-    public int getPRICE_RENT() {
-        return PRICE_RENT;
-    }
-
-    public void setPRICE_RENT(int PRICE_RENT) {
-        this.PRICE_RENT = PRICE_RENT;
-    }
-
-    public int getCAR_YEAR() {
-        return CAR_YEAR;
-    }
-
-    public void setCAR_YEAR(int CAR_YEAR) {
-        this.CAR_YEAR = CAR_YEAR;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
+    public Vehicle(int id, String carBrand, int priceRent, int carYear) {
+        this.id = id;
+        this.carBrand = carBrand;
+        this.priceRent = priceRent;
+        this.carYear = carYear;
     }
 
     public User getUserVehicle() {
@@ -73,4 +45,35 @@ public class Vehicle {
         this.userVehicle = userVehicle;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCarBrand() {
+        return carBrand;
+    }
+
+    public void setCarBrand(String carBrand) {
+        this.carBrand = carBrand;
+    }
+
+    public Integer getPriceRent() {
+        return priceRent;
+    }
+
+    public void setPriceRent(int priceRent) {
+        this.priceRent = priceRent;
+    }
+
+    public Integer getCarYear() {
+        return carYear;
+    }
+
+    public void setCarYear(int carYear) {
+        this.carYear = carYear;
+    }
 }

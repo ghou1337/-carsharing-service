@@ -19,8 +19,9 @@
     </form>
 </div>
     <div th:each="everycars: ${user_car}">
-        <p th:text="${everycars.getCARBRAND()}"/>
-        <form th:method="DELETE" th:action="@{main/delete/{id}(id=${everycars.getID()})}">
+        <p th:text="${everycars.getCarBrand()}"/>
+        <p th:text="${timer}">timer</p>
+        <form th:method="DELETE" th:action="@{main/delete/{id}(id=${everycars.getId()})}">
             <input value="Complete the lease" type="submit" class="input-reject">
         </form>
     </div>
@@ -38,10 +39,10 @@
         <th>Rent</th>
     </tr>
     <tr th:each="vehicle : ${vehicles}">
-        <td th:text="${vehicle.getCARBRAND()}"></td>
-        <td th:text="${vehicle.getPRICE_RENT()}"></td>
+        <td th:text="${vehicle.getCarBrand()}"></td>
+        <td th:text="${vehicle.getPriceRent()}"></td>
         <td>
-            <form th:method="PATCH" th:action="@{main/{id}(id=${vehicle.getID()})}">
+            <form th:method="PATCH" th:action="@{main/{id}(id=${vehicle.getId()})}">
                 <input value="Rent a vehicle" type="submit" class="button">
             </form>
         </td>

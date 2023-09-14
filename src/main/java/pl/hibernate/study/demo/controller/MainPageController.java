@@ -38,10 +38,11 @@ public class MainPageController {
     }
 
     @PatchMapping("/main/{id}")
-    public String updateCar(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
+    public String rentCar(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
         try {
             vehicleService.saveUserCar(userService.getAuthenticatedUser(), id);
             redirectAttributes.addFlashAttribute("success_message", "The car was successfully rented!");
+            redirectAttributes.addFlashAttribute("timer", System.currentTimeMillis());
         } catch (NotEnoughBalanceException e) {
             redirectAttributes.addFlashAttribute("error_message", e.getMessage() );
         }
@@ -52,5 +53,9 @@ public class MainPageController {
     public String deleteCar(@PathVariable("id") int id) {
         vehicleService.deleteUserCar(id);
         return "redirect:/main";
+    }
+
+    public Long timerForRent() {
+        return System.currentTimeMillis();
     }
 }

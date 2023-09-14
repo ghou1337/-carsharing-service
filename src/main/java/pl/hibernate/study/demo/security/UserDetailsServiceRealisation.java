@@ -9,6 +9,7 @@ import pl.hibernate.study.demo.model.User;
 import pl.hibernate.study.demo.repos.UserRepo;
 
 import java.util.Optional;
+
 @Service
 public class UserDetailsServiceRealisation implements UserDetailsService {
     @Autowired

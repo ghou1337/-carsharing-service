@@ -4,14 +4,15 @@ import jakarta.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "carsharing_users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private int id;
     @NotEmpty(message = "Shouldn't be empty")
     @Size(min = 3, max = 30, message = "Login should be grater then 3 characters")
@@ -29,7 +30,7 @@ public class User {
     @Column(name = "name")
     private String name;
     @Column(name = "permissions")
-    private String permissions;
+    private String role;
     @Column(name = "money")
     private float money;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userVehicle")
@@ -38,13 +39,12 @@ public class User {
     public User() {
     }
 
-    public User(int id, String login, String password, String email, String name, String permissions, float money) {
+    public User(int id, String login, String password, String email, String name, float money) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.email = email;
         this.name = name;
-        this.permissions = permissions;
         this.money = money;
     }
 
@@ -96,19 +96,19 @@ public class User {
         this.rentedVehicle = rentedVehicle;
     }
 
-    public String getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(String permissions) {
-        this.permissions = permissions;
-    }
-
     public float getMoney() {
         return money;
     }
 
     public void setMoney(float money) {
         this.money = money;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

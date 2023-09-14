@@ -1,5 +1,6 @@
 package pl.hibernate.study.demo.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +20,7 @@ public class UserService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
     public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
@@ -34,7 +36,7 @@ public class UserService {
 
     public void register(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setPermissions("USER");
+        user.setRole("USER");
         userRepo.save(user);
     }
 

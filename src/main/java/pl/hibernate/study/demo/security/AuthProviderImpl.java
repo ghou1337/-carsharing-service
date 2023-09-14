@@ -10,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-
 @Component
 public class AuthProviderImpl implements AuthenticationProvider {
     private final UserDetailsServiceRealisation userDetailsServiceRealisation;
@@ -29,10 +27,9 @@ public class AuthProviderImpl implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         String encodedPassword = passwordEncoder.encode(password);
         UserDetails personDetails = userDetailsServiceRealisation.loadUserByUsername(username);
-
         if(!passwordEncoder.matches(password, encodedPassword))
             throw new BadCredentialsException("Incorrect password");
-        return new UsernamePasswordAuthenticationToken(personDetails, password, Collections.emptyList());
+        return new UsernamePasswordAuthenticationToken(personDetails, password, personDetails.getAuthorities());
     }
 
     @Override
