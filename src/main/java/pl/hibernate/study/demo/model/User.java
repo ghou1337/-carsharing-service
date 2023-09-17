@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -33,28 +32,20 @@ public class User {
     private String role;
     @Column(name = "money")
     private float money;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userVehicle")
-    private List<Vehicle> rentedVehicle;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carRenter")
+    private List<RentedVehicle> rentingUsers;
 
     public User() {
     }
 
-    public User(int id, String login, String password, String email, String name, float money) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.name = name;
-        this.money = money;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public User(int id, String login, String password, String email, String name, float money) {
+//        this.id = id;
+//        this.login = login;
+//        this.password = password;
+//        this.email = email;
+//        this.name = name;
+//        this.money = money;
+//    }
 
     public int getId() {
         return id;
@@ -88,12 +79,20 @@ public class User {
         this.email = email;
     }
 
-    public List<Vehicle> getRentedVehicle() {
-        return rentedVehicle;
+    public String getName() {
+        return name;
     }
 
-    public void setRentedVehicle(List<Vehicle> rentedVehicle) {
-        this.rentedVehicle = rentedVehicle;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public float getMoney() {
@@ -104,11 +103,11 @@ public class User {
         this.money = money;
     }
 
-    public String getRole() {
-        return role;
+    public List<RentedVehicle> getRentingUsers() {
+        return rentingUsers;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRentingUsers(List<RentedVehicle> rentingUsers) {
+        this.rentingUsers = rentingUsers;
     }
 }

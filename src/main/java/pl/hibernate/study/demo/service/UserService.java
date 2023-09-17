@@ -17,14 +17,11 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserService {
-    private final UserRepo userRepo;
-    private final PasswordEncoder passwordEncoder;
-
     @Autowired
-    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
-        this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private UserRepo userRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public User findUserById(int id) {
         return userRepo.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + id));
@@ -44,5 +41,9 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsConfig userDetailsConfig = (UserDetailsConfig)authentication.getPrincipal();
         return findUserById(userDetailsConfig.user().getId());
+    }
+
+    public int getAuthenticatedUserId() {
+        return getAuthenticatedUser().getId();
     }
 }

@@ -4,15 +4,11 @@ import jakarta.persistence.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "vehicles")
 public class Vehicle {
-    @ManyToOne
-    @JoinColumn(name = "user_car", referencedColumnName = "user_id")
-    @OrderBy("id")
-    private User userVehicle;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -27,22 +23,19 @@ public class Vehicle {
     @Column(name = "car_year")
     private int carYear;
 
+    @Column(name = "availability")
+    private Boolean availability;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rentedCar")
+    private List<RentedVehicle> rentedVehicles;
+
     public Vehicle() {
     }
-
     public Vehicle(int id, String carBrand, int priceRent, int carYear) {
         this.id = id;
         this.carBrand = carBrand;
         this.priceRent = priceRent;
         this.carYear = carYear;
-    }
-
-    public User getUserVehicle() {
-        return userVehicle;
-    }
-
-    public void setUserVehicle(User userVehicle) {
-        this.userVehicle = userVehicle;
     }
 
     public int getId() {
@@ -75,5 +68,21 @@ public class Vehicle {
 
     public void setCarYear(int carYear) {
         this.carYear = carYear;
+    }
+
+    public Boolean getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(Boolean availability) {
+        this.availability = availability;
+    }
+
+    public List<RentedVehicle> getRentedVehicles() {
+        return rentedVehicles;
+    }
+
+    public void setRentedVehicles(List<RentedVehicle> rentedVehicles) {
+        this.rentedVehicles = rentedVehicles;
     }
 }

@@ -4,38 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.hibernate.study.demo.model.Vehicle;
+import pl.hibernate.study.demo.repos.RentedVehicleRepo;
 import pl.hibernate.study.demo.repos.VehicleRepo;
-import pl.hibernate.study.demo.model.User;
-import pl.hibernate.study.demo.service.exe.NotEnoughBalanceException;
 
 import java.util.List;
 
 @Service
 @Transactional
 public class VehicleService {
-    private final VehicleRepo vehicleRepo;
-
-    private final UserService userService;
-
-    public VehicleService(VehicleRepo vehicleRepo, UserService userService) {
-        this.vehicleRepo = vehicleRepo;
-        this.userService = userService;
-    }
-
-    public void saveCar(Vehicle vehicle) {
-        vehicleRepo.save(vehicle);
-    }
-
-    public List<Vehicle> searchCar(String brand) {
-        return vehicleRepo.getVehicleByCarBrand(brand);
-    }
-    public List<Vehicle> getUserCar() {
-        return vehicleRepo.getVehicleByUserVehicle(userService.getAuthenticatedUser());
-    }
-
-    public List<Vehicle> getAllCars() {
-        return vehicleRepo.findAllByUserVehicleIsNull();
-    }
+    @Autowired
+    private  VehicleRepo vehicleRepo;
 
     public Vehicle getCarById(int carID) {
         if(vehicleRepo.findById(carID).isPresent()) {
@@ -43,19 +21,51 @@ public class VehicleService {
         }else
             throw new RuntimeException("Car wan not found");
     }
-    public void saveUserCar(User user, int carId) throws NotEnoughBalanceException {
-        User userRenter = userService.getAuthenticatedUser();
-        float actualMoney = userRenter.getMoney();
-        float priceRent = getCarById(carId).getPriceRent();
-        if (actualMoney >= priceRent) {
-            userService.getAuthenticatedUser().setMoney(actualMoney - priceRent);
-            vehicleRepo.setUserCar(user, carId);
-        } else {
-            throw new NotEnoughBalanceException("Not enough money for the rent!");
-        }
+
+    public void carWasRented(int id) {
+        vehicleRepo.setAvailabilityToFalse(id);
     }
 
-    public void deleteUserCar(int id) {
-        vehicleRepo.setNullUserCar(id);
+    public void carAvailable(int id) {
+        vehicleRepo.setAvailabilityToTrue(id);
     }
+
+    public List<Vehicle> getAllCars() {
+        return vehicleRepo.getAllByAvailabilityIsTrue();
+    }
+
+    public void saveCar(Vehicle vehicle) {
+        vehicle.setAvailability(true);
+        vehicleRepo.save(vehicle);
+    }
+
+
+//
+//    public List<Vehicle> searchCar(String brand) {
+//        return vehicleRepo.getVehicleByCarBrand(brand);
+//    }
+
+//    //rv serivce needed
+//    public List<Vehicle> getUserCar() {
+//        return rentedVehicleRepo.getRentedVehiclesByCarRenter(userService.getAuthenticatedUser());
+//    }
+//    //rv serivce needed
+//    public void carWasRented() {
+//        return vehicleRepo.;
+//    }
+//    public void saveUserCar(User user, int carId) throws NotEnoughBalanceException {
+//        User userRenter = userService.getAuthenticatedUser();
+//        float actualMoney = userRenter.getMoney();
+//        float priceRent = getCarById(carId).getPriceRent();
+//        if (actualMoney >= priceRent) {
+//            userService.getAuthenticatedUser().setMoney(actualMoney - priceRent);
+//            vehicleRepo.setUserCar(user, carId);
+//        } else {
+//            throw new NotEnoughBalanceException("Not enough money for the rent!");
+//        }
+//    }
+
+//    public void deleteUserCar(int id) {
+//        vehicleRepo.setNullUserCar(id);
+//    }
 }
