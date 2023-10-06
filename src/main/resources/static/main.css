@@ -27,6 +27,14 @@ input[type="text"] {
     cursor: pointer;
 }
 
+.input-submit {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 button[type="submit"] {
     padding: 5px 10px;
     background-color: #4CAF50;
@@ -57,6 +65,58 @@ tr:nth-child(even) {
 
 .message{
     animation: fadeIn 1s;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Расстояние между карточками */
+    max-width: 1200px; /* Максимальная ширина контейнера */
+    margin: 0 auto; /* Центрирование контейнера */
+    padding: 20px; /* Отступ вокруг контейнера */
+}
+
+.card {
+    width: calc(20% - 20px); /* 20% ширины контейнера с учетом отступов */
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Тень карточек */
+    margin-bottom: 20px; /* Отступ между карточками */
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out; /* Анимация при наведении */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Увеличение при наведении */
+}
+
+.card-header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.card-content {
+    padding: 10px;
+    text-align: center;
+}
+
+.card-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.card-action {
+    text-align: center;
+    padding: 10px;
+    background-color: #c1cdd6;
+    color: #fff;
+    cursor: pointer;
 }
 
 @keyframes fadeIn {

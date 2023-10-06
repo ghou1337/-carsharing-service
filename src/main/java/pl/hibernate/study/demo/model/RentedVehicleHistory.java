@@ -2,11 +2,14 @@ package pl.hibernate.study.demo.model;
 
 import jakarta.persistence.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
-@Table(name = "rented_vehicles")
-public class RentedVehicle {
+@Table(name = "rent_history")
+public class RentedVehicleHistory {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +21,8 @@ public class RentedVehicle {
     @Column(name = "rent_completion_at")
     private LocalDateTime rentCompletionAt;
 
+    @Column(name = "rent_duration")
+    private Long rentDuration;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User carRenter;
@@ -26,8 +31,19 @@ public class RentedVehicle {
     @JoinColumn(name = "rented_car_id", referencedColumnName = "id")
     private Vehicle rentedCar;
 
-    public RentedVehicle() {
+    @Column(name = "hash")
+    private String hash;
 
+    public RentedVehicleHistory() {
+
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     public int getId() {
@@ -69,4 +85,13 @@ public class RentedVehicle {
     public void setRentedCar(Vehicle rentedCar) {
         this.rentedCar = rentedCar;
     }
+
+    public Long getRentDuration() {
+        return Duration.between(this.rentStartAt, this.rentCompletionAt).toMinutes();
+    }
+
+    public void setRentDuration(Long rentDuration) {
+        this.rentDuration = rentDuration;
+    }
+
 }

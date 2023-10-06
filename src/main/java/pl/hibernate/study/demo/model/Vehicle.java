@@ -22,12 +22,19 @@ public class Vehicle {
     @NotNull(message = "Car year shouldn't be empty")
     @Column(name = "car_year")
     private int carYear;
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @Column(name = "availability")
     private Boolean availability;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rentedCar")
-    private List<RentedVehicle> rentedVehicles;
+    private List<RentedVehicleHistory> rentedVehicleHistories;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehicle")
+    private List<RentingVehicle> rentingVehicles;
+
+
 
     public Vehicle() {
     }
@@ -74,15 +81,23 @@ public class Vehicle {
         return availability;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public void setAvailability(Boolean availability) {
         this.availability = availability;
     }
 
-    public List<RentedVehicle> getRentedVehicles() {
-        return rentedVehicles;
+    public List<RentedVehicleHistory> getRentedVehicles() {
+        return rentedVehicleHistories;
     }
 
-    public void setRentedVehicles(List<RentedVehicle> rentedVehicles) {
-        this.rentedVehicles = rentedVehicles;
+    public void setRentedVehicles(List<RentedVehicleHistory> rentedVehicleHistories) {
+        this.rentedVehicleHistories = rentedVehicleHistories;
     }
 }

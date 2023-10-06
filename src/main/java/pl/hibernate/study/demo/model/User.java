@@ -33,19 +33,22 @@ public class User {
     @Column(name = "money")
     private float money;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "carRenter")
-    private List<RentedVehicle> rentingUsers;
+    private List<RentedVehicleHistory> rentingUsers;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<RentingVehicle> rentedVehicleHistories;
 
     public User() {
     }
 
-//    public User(int id, String login, String password, String email, String name, float money) {
-//        this.id = id;
-//        this.login = login;
-//        this.password = password;
-//        this.email = email;
-//        this.name = name;
-//        this.money = money;
-//    }
+    public User(int id, String login, String password, String email, String name, float money) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.name = name;
+        this.money = money;
+    }
 
     public int getId() {
         return id;
@@ -103,11 +106,8 @@ public class User {
         this.money = money;
     }
 
-    public List<RentedVehicle> getRentingUsers() {
-        return rentingUsers;
+    public Integer getMoneyInt() {
+        return Math.round(this.money);
     }
 
-    public void setRentingUsers(List<RentedVehicle> rentingUsers) {
-        this.rentingUsers = rentingUsers;
-    }
 }

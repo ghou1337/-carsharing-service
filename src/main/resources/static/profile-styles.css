@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Стили для блока данных пользователя */
+.user-profile {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 0 auto 20px;
+}
+
+.user-profile h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.user-profile a {
+    display: block;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Стили для таблички истории аренды */
+.rented-car-history-table {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    width: 80%;
+}
+
+.rented-car-history-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rented-car-history-table th, .rented-car-history-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.rented-car-history-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* Дополнительные стили для небольшой компактной таблички */
+.compact-table {
+    font-size: 14px;
+}

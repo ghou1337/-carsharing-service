@@ -5,50 +5,55 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>CarSharing</title>
     <link rel="stylesheet" th:href="@{main.css}"/>
 </head>
 <body>
+<div class="nav-bar">
+    <a th:href="@{/profile}" >Your profile</a>
+    <a th:href="@{/main}">Main page</a>
+    <a th:href="@{/about}">About us</a>
+</div>
 <div class="user-nav">
     <h1>Hello, <label th:text="${user_data.getName()}"/></h1>
     <div th:if="${error_message}" style="color: red;" class="message"><p th:text="${error_message}">message</p></div>
     <div th:if="${success_message}" style="color: green;" class="message"><p th:text="${success_message}">message</p></div>
-    <h1>Your money: <span th:text="${#strings.replace(user_data.getMoney(), '.', ',')} + '$'"/></h1>
+    <h1>Your money: <span th:text="${user_data.getMoneyInt()} + '$'"/></h1>
     <form th:action="@{/logout}" method="post">
         <input type="submit" value="Sign Out" class="input-reject"/>
     </form>
 </div>
     <div th:each="everycars: ${user_car}">
         <p th:text="${everycars.getCarBrand()}"/>
-<!--        <p th:text="${timer}">timer</p>-->
         <form th:method="DELETE" th:action="@{main/delete/{id}(id=${everycars.getId()})}">
             <input value="Complete the lease" type="submit" class="input-reject">
         </form>
     </div>
 <hr>
 <h3>All cars for rent</h3>
-<form>
-    <input type="text" name="carBrand" placeholder="Search by Car Brand"/>
-    <button type="submit">Search</button>
-    <a th:href="@{/main}" class="input-reject">Reset</a>
-</form>
-<table>
-    <tr>
-        <th>Car brand</th>
-        <th>Price rent</th>
-        <th>Rent</th>
-    </tr>
-    <tr th:each="vehicle : ${vehicles}">
-        <td th:text="${vehicle.getCarBrand()}"></td>
-        <td th:text="${vehicle.getPriceRent()}"></td>
-        <td>
+<!--<div class="search-filter">-->
+<!--    <form th:action="@{/search-by-name}" th:method="POST" th:object="${vehicleAttributes}">-->
+<!--        <input th:field="*{carBrand}" th:type="text" placeholder="brand"/>-->
+<!--        <input th:field="*{carYear}" th:type="text" placeholder="year">-->
+<!--        <input th:field="*{priceRent}" th:type="text" placeholder="price">-->
+<!--        <input type="submit" placeholder="search">-->
+<!--&lt;!&ndash;        <input th:href="@{/main}" placeholder="reset" type="submit" class="input-reject">&ndash;&gt;-->
+<!--    </form>-->
+<!--</div>-->
+<div class="card-container">
+    <div class="card" th:each="vehicle : ${vehicles}">
+        <div class="card-header" th:text="${vehicle.getCarBrand()}"></div>
+        <div class="card-content" th:text="${vehicle.getPriceRent()} + ' pln/day'"></div>
+        <div class="card-image">
+            <img th:src="${vehicle.getImageUrl()}"alt="Car Image"/>
+        </div>
+        <div class="card-action">
             <form th:method="PATCH" th:action="@{main/{vehicleId}(vehicleId=${vehicle.getId()})}">
-                <input value="Rent a vehicle" type="submit" class="button">
+                <input value="Rent a vehicle" type="submit" class="input-submit">
             </form>
-        </td>
-        <td>
-        </td>
-    </tr>
-</table>
+        </div>
+    </div>
+</div>
+</div>
 </body>
 </html>

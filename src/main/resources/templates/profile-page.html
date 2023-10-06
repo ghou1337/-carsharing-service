@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" th:href="@{/profile-styles.css}">
+</head>
+<body>
+<div class="user-profile">
+    <a th:text="'You: ' + ${user.getName()}">Name</a>
+    <a th:text="'Balance: ' + ${user.getMoneyInt()} + '$'">Balance</a>
+</div>
+<div class="rented-car-history-table">
+    <table class="compact-table">
+        <thead>
+        <tr>
+            <th>Car brand</th>
+            <th>Car year</th>
+            <th>Price rent</th>
+            <th>Rent duration</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Отображаем информацию об арендованных автомобилях и rentDuration -->
+        <tr th:each="rentedcar : ${rentedCars}">
+            <td th:text="${rentedcar.getRentedCar().getCarBrand()}">Brand</td>
+            <td th:text="${rentedcar.getRentedCar().getCarYear()}">Year</td>
+            <td th:text="${rentedcar.getRentedCar().getPriceRent()} + ' pln'">Price</td>
+            <td th:text="${rentedcar.getRentDuration()} + ' min'">Duration</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

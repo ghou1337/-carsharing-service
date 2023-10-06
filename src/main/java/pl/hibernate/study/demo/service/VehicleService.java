@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.hibernate.study.demo.model.Vehicle;
-import pl.hibernate.study.demo.repos.RentedVehicleRepo;
 import pl.hibernate.study.demo.repos.VehicleRepo;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class VehicleService {
             throw new RuntimeException("Car wan not found");
     }
 
-    public void carWasRented(int id) {
+    public void setNullForRentedCar(int id) {
         vehicleRepo.setAvailabilityToFalse(id);
     }
 
@@ -32,6 +31,13 @@ public class VehicleService {
 
     public List<Vehicle> getAllCars() {
         return vehicleRepo.getAllByAvailabilityIsTrue();
+    }
+
+    public List<Vehicle> getAllCarsWithFilter(Vehicle filter) {
+        return vehicleRepo.getAllByAvailabilityIsTrueAndCarYearIsAndCarBrandIsAndPriceRentIs(
+                filter.getCarYear(),
+                filter.getCarBrand(),
+                filter.getPriceRent());
     }
 
     public void saveCar(Vehicle vehicle) {
