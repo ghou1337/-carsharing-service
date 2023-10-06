@@ -33,41 +33,9 @@ public class RentedVehicleHistoryService {
 
     public void completeLeaseHistoryRecord(String hash) {
         rentedVehicleHistoryRepo.saveRentedTime(LocalDateTime.now(), hash);
-//        rentedVehicleHistoryRepo.saveRentDuration(getRentalDuration(user, id), id);
     }
 
     public List<RentedVehicleHistory> getAllRentedCars(User user) {
-        return rentedVehicleHistoryRepo.getAllByCarRenter_Id(user.getId());
+        return rentedVehicleHistoryRepo.getAllByCarRenter_IdAndRentCompletionAtIsNotNull(user.getId());
     }
-
-    public void rentingTime(RentedVehicleHistory rentedVehicleHistory) throws InterruptedException {
-        LocalDateTime rentStartAt = rentedVehicleHistory.getRentStartAt();
-        long hours, minutes, seconds;
-        while (rentedVehicleHistory.getRentCompletionAt() == null ) {
-            LocalDateTime currentTime = LocalDateTime.now();
-            Duration duration = Duration.between(rentStartAt, currentTime);
-
-            hours = duration.toHours();
-            minutes = duration.toMinutesPart();
-            seconds = duration.toSecondsPart();
-
-            String actualRentTime = hours + " часов, " + minutes + " минут, " + seconds + " секунд";
-        }
-    }
-
-    // Reason of separating tables to history and actual renting. Logically that's better too.
-
-//    public List<Vehicle> getUserCars(User user) {
-//        return rentedVehicleHistoryRepo.getRentedVehiclesByCarRenterAndRentCompletionAtIsNull(user).stream()
-//                .map(RentedVehicleHistory::getRentedCar)
-//                .collect(Collectors.toList());
-//    }
-
-    //    private Long getRentalDuration(User user, int id) {
-//        RentedVehicleHistory rentedVehicleHistory;
-//        rentedVehicleHistory = rentedVehicleHistoryRepo.
-//                getRentedVehicleHistoryByCarRenterAndRentedCar_IdAndRentCompletionAtIsNull(user, id);
-//        return Duration.between(rentedVehicleHistory.getRentStartAt(),
-//                                rentedVehicleHistory.getRentCompletionAt()).toMinutes();
-//    }
 }

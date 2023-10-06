@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface RentedVehicleHistoryRepo extends JpaRepository <RentedVehicleHistory, Integer> {
 
-    List<RentedVehicleHistory> getAllByCarRenter_Id(int userId);
+    List<RentedVehicleHistory> getAllByCarRenter_IdAndRentCompletionAtIsNotNull(int userId);
 
     @Modifying
     @Transactional
