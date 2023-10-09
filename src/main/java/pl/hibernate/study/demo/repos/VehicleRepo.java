@@ -1,6 +1,7 @@
 package pl.hibernate.study.demo.repos;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,7 +9,7 @@ import pl.hibernate.study.demo.model.Vehicle;
 
 import java.util.List;
 
-public interface VehicleRepo extends JpaRepository<Vehicle, Integer> {
+public interface VehicleRepo extends JpaRepository<Vehicle, Integer>, JpaSpecificationExecutor<Vehicle> {
     @Transactional
     @Modifying
     @Query("UPDATE Vehicle v SET v.availability = false WHERE v.id = ?1")
@@ -21,5 +22,5 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Integer> {
 
     List<Vehicle> getAllByAvailabilityIsTrue();
 
-    List<Vehicle> getAllByAvailabilityIsTrueAndCarYearIsAndCarBrandIsAndPriceRentIs(int carYear, String carBrand, int priceRent);
+    List<Vehicle> getAllByCarBrandOrPriceRentOrCarYear(String carBrand, int priceRent, int carYear);
 }

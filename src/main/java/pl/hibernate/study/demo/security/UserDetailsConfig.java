@@ -20,12 +20,12 @@ public record UserDetailsConfig(User user) implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.user.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.user.getLogin();
+        return user.getLogin();
     }
 
     @Override

@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "rent_history")
@@ -86,8 +84,19 @@ public class RentedVehicleHistory {
         this.rentedCar = rentedCar;
     }
 
-    public Long getRentDuration() {
+    public long getRentDuration() {
         return Duration.between(this.rentStartAt, this.rentCompletionAt).toMinutes();
+    }
+
+    public int getRentCost() {
+        int costs = (int) (getRentDuration() * this.rentedCar.getPriceRent());
+        return costs;
+    }
+
+    public String getRentStartAtToString() {
+        String date = this.rentStartAt.toString();
+        date.replace("T", " ");
+        return date.replaceAll("\\.\\d+", "");
     }
 
     public void setRentDuration(Long rentDuration) {

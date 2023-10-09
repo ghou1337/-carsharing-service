@@ -41,8 +41,8 @@ public class WebSecurityConfig {
             .logout((logout) -> logout
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/login?logout")
-                    .permitAll());
-
+                    .permitAll()
+            );
         return http.build();
     }
     @Bean

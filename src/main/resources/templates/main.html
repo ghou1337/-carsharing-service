@@ -31,19 +31,22 @@
     </div>
 <hr>
 <h3>All cars for rent</h3>
-<!--<div class="search-filter">-->
-<!--    <form th:action="@{/search-by-name}" th:method="POST" th:object="${vehicleAttributes}">-->
-<!--        <input th:field="*{carBrand}" th:type="text" placeholder="brand"/>-->
-<!--        <input th:field="*{carYear}" th:type="text" placeholder="year">-->
-<!--        <input th:field="*{priceRent}" th:type="text" placeholder="price">-->
-<!--        <input type="submit" placeholder="search">-->
-<!--&lt;!&ndash;        <input th:href="@{/main}" placeholder="reset" type="submit" class="input-reject">&ndash;&gt;-->
-<!--    </form>-->
-<!--</div>-->
+<div class="search-filter">
+    <form th:action="@{/main/filter}" th:method="POST" th:object="${search_filter_updated}">
+        <p>Search filter</p>
+        <input th:field="*{carBrand}" type="text" placeholder="brand"/>
+        <input th:field="*{carYear}" type="number" placeholder="year"/>
+        <input th:field="*{priceRent}" type="number" placeholder="price"/>
+        <input type="submit" placeholder="search">
+    </form>
+    <form th:action="@{/main/reset-filter}" th:method="POST">
+        <input placeholder="reset" type="submit" class="input-reject"/>
+    </form>
+</div>
 <div class="card-container">
     <div class="card" th:each="vehicle : ${vehicles}">
         <div class="card-header" th:text="${vehicle.getCarBrand()}"></div>
-        <div class="card-content" th:text="${vehicle.getPriceRent()} + ' pln/day'"></div>
+        <div class="card-content" th:text="${vehicle.getPriceRent()} + '$ ' + ${vehicle.getCarYear()}"></div>
         <div class="card-image">
             <img th:src="${vehicle.getImageUrl()}"alt="Car Image"/>
         </div>
