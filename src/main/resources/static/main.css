@@ -166,6 +166,42 @@ tr:nth-child(even) {
     margin-right: 20px; /* Добавляет отступ между блоками */
 }
 
+/* RENTED USER CARS */
+
+.rented-car-list {
+    display: flex;
+    flex-wrap: nowrap; /* Запрет переноса на новую строку */
+    overflow-x: auto; /* Горизонтальная прокрутка, если объектов слишком много */
+}
+
+.car-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.car-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-right: 10px; /* Расстояние между объектами */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+    flex: 0 0 auto; /* Запрет увеличения размера объектов */
+}
+
+.car-brand {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.rented-car-image {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+
 @keyframes fadeIn {
     from {
         opacity: 0;
