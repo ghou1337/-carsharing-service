@@ -1,16 +1,16 @@
-package pl.hibernate.study.demo.modelDTO;
+package pl.hibernate.study.demo.model;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class VehicleSearchFilterDTO {
+public class VehicleSearchFilter {
     private String carYear;
 
     private String carBrand;
 
     private String priceRent;
 
-    public VehicleSearchFilterDTO() {
+    public VehicleSearchFilter() {
     }
 
     public String getCarYear() {
@@ -39,7 +39,7 @@ public class VehicleSearchFilterDTO {
 
     @Override
     public String toString() {
-        return "VehicleSearchFilterDTO{" +
+        return "VehicleSearchFilter{" +
                 "carYear=" + carYear +
                 ", carBrand='" + carBrand + '\'' +
                 ", priceRent=" + priceRent +

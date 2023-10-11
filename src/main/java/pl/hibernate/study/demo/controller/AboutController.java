@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/about")
-public class AboutPageController {
+public class AboutController {
 
     @GetMapping()
     public String page() {

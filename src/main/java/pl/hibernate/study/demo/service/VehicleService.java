@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.hibernate.study.demo.model.Vehicle;
-import pl.hibernate.study.demo.modelDTO.VehicleSearchFilterDTO;
+import pl.hibernate.study.demo.model.VehicleSearchFilter;
 import pl.hibernate.study.demo.repos.VehicleRepo;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class VehicleService {
         return vehicleRepo.getAllByAvailabilityIsTrue();
     }
 
-    public List<Vehicle> getAllCarsWithFilter(VehicleSearchFilterDTO filter) {
+    public List<Vehicle> getAllCarsWithFilter(VehicleSearchFilter filter) {
         filter.setCarYear(filter.getCarYear().isEmpty() ? "0" : filter.getCarYear());
         filter.setPriceRent(filter.getPriceRent().isEmpty() ? "0" : filter.getPriceRent());
 

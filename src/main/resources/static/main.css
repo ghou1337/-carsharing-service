@@ -3,6 +3,11 @@ body {
     margin: 20px;
 }
 
+.main-content {
+    display: flex;
+    justify-content: space-between; /* Распределяет пространство между блоками */
+}
+
 h1 {
     color: chocolate;
 }
@@ -75,7 +80,7 @@ tr:nth-child(even) {
 
 .card-container {
     display: flex;
-    flex-wrap: wrap;
+    flex: 2;
     justify-content: center;
     gap: 20px; /* Расстояние между карточками */
     max-width: 1200px; /* Максимальная ширина контейнера */
@@ -123,6 +128,42 @@ tr:nth-child(even) {
     background-color: #c1cdd6;
     color: #fff;
     cursor: pointer;
+}
+
+/*NAVIGATION BAR*/
+
+.nav-bar {
+    display: flex;
+    justify-content: center;
+    background-color: #333; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    padding: 10px; /* Внутренний отступ */
+}
+
+.nav-bar a {
+    text-decoration: none; /* Убираем стандартное подчеркивание ссылок */
+    color: #fff; /* Цвет текста ссылок */
+    margin: 0 10px; /* Горизонтальный отступ между ссылками */
+}
+
+.nav-bar a:hover {
+    text-decoration: underline; /* Подчеркивание ссылки при наведении */
+}
+
+/*SEARCH FILTER*/
+
+.search-filter-input-container {
+    display: flex;
+    flex-direction: column; /* Располагает инпуты вертикально */
+}
+
+.search-filter-input-container input {
+    margin-bottom: 10px; /* Добавляет вертикальный отступ между инпутами */
+}
+
+.search-filter-input-container {
+    flex: 1; /* Занимает всю доступную ширину слева */
+    margin-right: 20px; /* Добавляет отступ между блоками */
 }
 
 @keyframes fadeIn {

@@ -25,7 +25,7 @@ public record UserDetailsConfig(User user) implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getLogin();
+        return user.getUsername();
     }
 
     @Override

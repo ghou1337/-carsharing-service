@@ -12,8 +12,8 @@
     <form th:action="@{/register}" th:method="POST" th:object="${user}">
       <div>
         <label>Login:</label>
-        <input type="text" th:field="*{login}">
-        <div style="color: red" th:if="${#fields.hasErrors('login')}">Username error</div>
+        <input type="text" th:field="*{username}">
+        <div style="color: red" th:if="${#fields.hasErrors('username')}">Username error</div>
       </div>
       <div>
         <label>Password:</label>

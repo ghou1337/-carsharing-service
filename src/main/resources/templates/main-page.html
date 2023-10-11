@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CarSharing</title>
+    <link rel="stylesheet" th:href="@{main.css}"/>
+</head>
+<body>
+<div class="header">
+    <h3 class="header-text">Car sharing service (praca dyplomowa)</h3>
+    <a href="/login">Sign in</a>
+    <a href="/register">Register</a>
+</div>
+<div class="card-container">
+    <div class="card" th:each="vehicle : ${vehicles}">
+        <div class="card-header" th:text="${vehicle.getCarBrand()}"></div>
+        <div class="card-content" th:text="${vehicle.getPriceRent()} + '$ ' + ${vehicle.getCarYear()}"></div>
+        <div class="card-image">
+            <img th:src="${vehicle.getImageUrl()}"alt="Car Image"/>
+        </div>
+        <div class="card-action">
+            <form th:method="PATCH" th:action="@{main/{vehicleId}(vehicleId=${vehicle.getId()})}">
+                <input value="Rent a vehicle" type="submit" class="input-submit">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

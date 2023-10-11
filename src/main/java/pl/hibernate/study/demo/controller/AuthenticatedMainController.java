@@ -7,38 +7,28 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.hibernate.study.demo.model.User;
 import pl.hibernate.study.demo.model.Vehicle;
-import pl.hibernate.study.demo.modelDTO.VehicleSearchFilterDTO;
-import pl.hibernate.study.demo.repos.VehicleRepo;
+import pl.hibernate.study.demo.model.VehicleSearchFilter;
 import pl.hibernate.study.demo.service.RentingVehicleService;
 import pl.hibernate.study.demo.service.UserService;
 import pl.hibernate.study.demo.service.VehicleService;
 import pl.hibernate.study.demo.service.exe.NotEnoughBalanceException;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/main")
-public class MainPageController {
+public class AuthenticatedMainController {
     private final UserService userService;
     private final VehicleService vehicleService;
     private final RentingVehicleService rentingVehicleService;
-
-    @Autowired
-    private VehicleSearchFilterDTO vehicleSearchFilterDTO;
-
     private Boolean searchFilter = false;
-    private final VehicleRepo vehicleRepo;
 
     @Autowired
-    public MainPageController(UserService userService, VehicleService vehicleService,
-                              RentingVehicleService rentingVehicleService,
-                              VehicleRepo vehicleRepo) {
+    public AuthenticatedMainController(UserService userService, VehicleService vehicleService,
+                                       RentingVehicleService rentingVehicleService) {
         this.userService = userService;
         this.vehicleService = vehicleService;
         this.rentingVehicleService = rentingVehicleService;
-        this.vehicleRepo = vehicleRepo;
     }
 
     private User getUser() {
@@ -46,18 +36,18 @@ public class MainPageController {
     }
 
     @GetMapping
-    public String showMainPage(@ModelAttribute("search_filter_updated") VehicleSearchFilterDTO vehicleSearchFilterDTO,
+    public String showMainPage(@ModelAttribute("search_filter_updated") VehicleSearchFilter vehicleSearchFilter,
                                Model model) {
         List<Vehicle> vehicles;
         if(searchFilter == false) {
             vehicles = vehicleService.getAllCars();
         } else {
-            vehicles = vehicleService.getAllCarsWithFilter(vehicleSearchFilterDTO);
+            vehicles = vehicleService.getAllCarsWithFilter(vehicleSearchFilter);
         }
         model.addAttribute("vehicles", vehicles);
         model.addAttribute("user_car", rentingVehicleService.getAllUserCars(getUser()));
         model.addAttribute("user_data", getUser());
-        return "main";
+        return "main-authenticated-page";
     }
     @PostMapping("/reset-filter")
     public String resetFilter() {
@@ -66,10 +56,10 @@ public class MainPageController {
     }
 
     @PostMapping("/filter")
-    public String searchFilter(VehicleSearchFilterDTO vehicleSearchFilterDTO,
+    public String searchFilter(VehicleSearchFilter vehicleSearchFilter,
                                RedirectAttributes redirectAttributes) {
         searchFilter = true;
-        redirectAttributes.addFlashAttribute("search_filter_updated", vehicleSearchFilterDTO);
+        redirectAttributes.addFlashAttribute("search_filter_updated", vehicleSearchFilter);
         return "redirect:/main";
     }
 

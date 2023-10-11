@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.hibernate.study.demo.model.Vehicle;
 import pl.hibernate.study.demo.service.VehicleService;
-import pl.hibernate.study.demo.validator.VehicleValidator;
+import pl.hibernate.study.demo.validator.VehicleAdminRecordValidator;
 
 import javax.validation.Valid;
 
@@ -20,7 +20,7 @@ public class AdminMainPage {
     private VehicleService vehicleService;
 
     @Autowired
-    private VehicleValidator vehicleValidator;
+    private VehicleAdminRecordValidator vehicleAdminRecordValidator;
 
     @GetMapping("/add-new-car")
     public String addPage(@ModelAttribute("vehicle") @Valid Vehicle vehicle) {
@@ -29,7 +29,7 @@ public class AdminMainPage {
 
     @PostMapping("/add-new-car")
     public String addNewCar(@ModelAttribute("vehicle") @Valid Vehicle vehicle, BindingResult bindingResult) {
-        vehicleValidator.validate(vehicle, bindingResult);
+        vehicleAdminRecordValidator.validate(vehicle, bindingResult);
         if(bindingResult.hasErrors()){
             return "/admin_page/add-new-car-page";
         }

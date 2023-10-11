@@ -27,9 +27,11 @@ public class WebSecurityConfig {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((requests) -> requests
-                    .requestMatchers("/home", "/register", "login.css", "registration-page-style.css").permitAll()
+                    .requestMatchers( "login.css", "registration-page-style.css", "main.css", "car_images/**").permitAll()
+                    .requestMatchers("/home", "/profile", "/register", "/public", "/about").permitAll()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
+
             )
             .formLogin((form) -> form
                     .loginPage("/login")

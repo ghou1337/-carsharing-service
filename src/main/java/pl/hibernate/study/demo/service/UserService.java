@@ -27,8 +27,8 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + id));
     }
 
-    public Optional<User> findUserByLogin(String username) {
-        return userRepo.findByLogin(username);
+    public Optional<User> findByUsername(String username) {
+        return userRepo.findByUsername(username);
     }
 
     public void register(User user){

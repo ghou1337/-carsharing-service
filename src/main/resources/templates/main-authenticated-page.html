@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CarSharing</title>
+    <link rel="stylesheet" th:href="@{main.css}"/>
+</head>
+<body class="body">
+<div class="nav-bar">
+    <a th:href="@{/main}">Main page</a>
+    <a th:href="@{/profile}" >Your profile</a>
+    <a th:href="@{/about}">About us</a>
+</div>
+<div class="user-nav">
+    <h1>Hello, <label th:text="${user_data.getName()}"/></h1>
+    <div th:if="${error_message}" style="color: red;" class="message"><p th:text="${error_message}">message</p></div>
+    <div th:if="${success_message}" style="color: green;" class="message"><p th:text="${success_message}">message</p></div>
+    <h1>Your money: <span th:text="${user_data.getMoneyInt()} + '$'"/></h1>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out" class="input-reject"/>
+    </form>
+</div>
+    <div th:each="everycars: ${user_car}">
+        <p th:text="${everycars.getCarBrand()}"/>
+        <form th:method="DELETE" th:action="@{main/delete/{id}(id=${everycars.getId()})}">
+            <input value="Complete the lease" type="submit" class="input-reject">
+        </form>
+    </div>
+<hr>
+<h3>All cars for rent</h3>
+<div class="main-content">
+    <div class="search-filter">
+        <form th:action="@{/main/filter}" th:method="POST" th:object="${search_filter_updated}">
+            <p>Search filter</p>
+            <div class="search-filter-input-container">
+                <input th:field="*{carBrand}" type="text" placeholder="brand" />
+                <input th:field="*{carYear}" type="number" placeholder="year" />
+                <input th:field="*{priceRent}" type="number" placeholder="price" />
+
+                <input type="submit" value="submit" class="input-submit">
+                <form th:action="@{/main/reset-filter}" th:method="POST">
+                    <input value="reset" type="submit" class="input-reject"/>
+                </form>
+            </div>
+        </form>
+    </div>
+    <div class="card-container">
+        <div class="card" th:each="vehicle : ${vehicles}">
+            <div class="card-header" th:text="${vehicle.getCarBrand()}"></div>
+            <div class="card-content" th:text="${vehicle.getPriceRent()} + '$ ' + ${vehicle.getCarYear()}"></div>
+            <div class="card-image"> <img th:src="${vehicle.getImageUrl()}"alt="Car Image"/></div>
+
+            <div class="card-action">
+                <form th:method="PATCH" th:action="@{main/{vehicleId}(vehicleId=${vehicle.getId()})}">
+                    <input value="Rent a vehicle" type="submit" class="input-submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

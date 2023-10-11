@@ -6,5 +6,5 @@ import pl.hibernate.study.demo.model.User;
 import java.util.Optional;
 
 public interface UserRepo extends JpaRepository<User, Integer> {
-    Optional<User> findByLogin(String u);
+    Optional<User> findByUsername(String username);
 }

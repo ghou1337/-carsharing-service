@@ -12,8 +12,6 @@ import pl.hibernate.study.demo.service.UserService;
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
-    //@ModelAttribute("rentedCars")List<RentedVehicle> rentedVehicle
-
     @Autowired
     private UserService userService;
 
@@ -27,17 +25,4 @@ public class ProfileController {
         model.addAttribute("rentedCars", rentedVehicleHistoryService.getAllRentedCars(user));
         return "profile-page";
     }
-
-//    public float getMoneySpent(User user) {
-//        List<Vehicle> vehicles = rentedVehicleService.getAllRentedCars(user)
-//                .stream()
-//                .map(RentedVehicle::getRentedCar)
-//                .collect(Collectors.toList());
-//        List<Integer> prices = vehicles.stream().map(Vehicle::getPriceRent).collect(Collectors.toList());
-//        List<Integer> moneySpent;
-////        for (moneySpent: prices
-////             ) {
-////
-////        }
-//    }
 }

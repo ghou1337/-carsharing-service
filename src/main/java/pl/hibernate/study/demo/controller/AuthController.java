@@ -8,24 +8,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.hibernate.study.demo.model.User;
 import pl.hibernate.study.demo.service.UserService;
-import pl.hibernate.study.demo.utils.UserValidator;
+import pl.hibernate.study.demo.validator.UserAuthenticationValidator;
 
 import javax.validation.Valid;
 
 @Controller
 public class AuthController {
     private final UserService userService;
-    private final UserValidator userValidator;
+    private final UserAuthenticationValidator userAuthenticationValidator;
 
     @Autowired
-    public AuthController(UserService userService, UserValidator userValidator) {
+    public AuthController(UserService userService, UserAuthenticationValidator userAuthenticationValidator) {
         this.userService = userService;
-        this.userValidator = userValidator;
+        this.userAuthenticationValidator = userAuthenticationValidator;
     }
 
     @GetMapping("/login")
     public String login() {
-        return "/login";
+        return "authentication-page";
     }
 
     @GetMapping("/register")
@@ -35,7 +35,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-        userValidator.validate(user, bindingResult);
+        userAuthenticationValidator.validate(user, bindingResult);
         if(bindingResult.hasErrors())
             return "/registration-page";
         userService.register(user);

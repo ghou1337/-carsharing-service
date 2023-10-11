@@ -16,7 +16,7 @@ public class User {
     @NotEmpty(message = "Shouldn't be empty")
     @Size(min = 3, max = 30, message = "Login should be grater then 3 characters")
     @Column(name = "login")
-    private String login;
+    private String username;
     @NotEmpty(message = "Shouldn't be empty")
     @Size(min = 3, max = 30, message = "Password should be grater then 3 characters")
     @Column(name = "password")
@@ -41,9 +41,9 @@ public class User {
     public User() {
     }
 
-    public User(int id, String login, String password, String email, String name, float money) {
+    public User(int id, String username, String password, String email, String name, float money) {
         this.id = id;
-        this.login = login;
+        this.username = username;
         this.password = password;
         this.email = email;
         this.name = name;
@@ -58,12 +58,12 @@ public class User {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

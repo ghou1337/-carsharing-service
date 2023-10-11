@@ -6,7 +6,7 @@ import org.springframework.validation.Validator;
 import pl.hibernate.study.demo.model.Vehicle;
 
 @Component
-public class VehicleValidator implements Validator {
+public class VehicleAdminRecordValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
         return Vehicle.class.isAssignableFrom(clazz);

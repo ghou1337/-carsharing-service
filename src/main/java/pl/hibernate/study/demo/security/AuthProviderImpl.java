@@ -26,6 +26,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
         UserDetails personDetails = userDetailsServiceRealisation.loadUserByUsername(username);
+        System.out.println("person details: "+personDetails.getUsername());
         if(!passwordEncoder.matches(password, personDetails.getPassword()))
             throw new BadCredentialsException("Incorrect password");
         return new UsernamePasswordAuthenticationToken(personDetails, password, personDetails.getAuthorities());
