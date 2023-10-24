@@ -20,7 +20,12 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Integer>, JpaSpecifi
     @Query("UPDATE Vehicle v SET v.availability = true WHERE v.id = ?1")
     void setAvailabilityToTrue(int vehicleId);
 
-    List<Vehicle> getAllByAvailabilityIsTrue();
+    @Query("SELECT v FROM Vehicle v " +
+            "WHERE (:carBrand IS NULL OR v.carBrand = :carBrand) " +
+            "AND (:priceRent IS NULL OR v.priceRent = :priceRent) " +
+            "AND (:carYear IS NULL OR v.carYear = :carYear) " +
+            "AND (:carBodyType IS NULL OR v.carClass = :carBodyType)")
+    List<Vehicle> getAllByCarBrandOrPriceRentOrCarYear(String carBrand , Integer priceRent, Integer carYear, String carBodyType);
 
-    List<Vehicle> getAllByCarBrandOrPriceRentOrCarYear(String carBrand, int priceRent, int carYear);
+    List<Vehicle> getAllByAvailabilityIsTrue();
 }

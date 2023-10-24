@@ -35,23 +35,29 @@
     </div>
 </div>
 <hr>
-<h3>All cars for rent</h3>
+<h3 style="text-align: center">All cars for rent</h3>
 <div class="main-content">
-    <div class="search-filter">
-        <form th:action="@{/main/filter}" th:method="POST" th:object="${search_filter_updated}">
-            <p>Search filter</p>
-            <div class="search-filter-input-container">
-                <input th:field="*{carBrand}" type="text" placeholder="brand" />
-                <input th:field="*{carYear}" type="number" placeholder="year" />
-                <input th:field="*{priceRent}" type="number" placeholder="price" />
-
-                <input type="submit" value="submit" class="input-submit">
-                <form th:action="@{/main/reset-filter}" th:method="POST">
-                    <input value="reset" type="submit" class="input-reject"/>
-                </form>
-            </div>
-        </form>
-    </div>
+        <div class="search-filter">
+            <form th:action="@{/main/filter}" th:method="POST" th:object="${search_filter_updated}">
+                <p>Search filter</p>
+                <div class="search-filter-input-container">
+                    <input th:field="*{carBrand}" type="text" placeholder="brand"/>
+                    <input th:field="*{carYear}" type="number" placeholder="year"/>
+                    <input th:field="*{priceRent}" type="number" placeholder="price"/>
+                    <div class="select-container">
+                        <select th:field="*{carBodyType}">
+                            <option th:each="type : ${T(pl.hibernate.study.demo.model.enums.CarBodyType).values()}"
+                                    th:value="${type}"
+                                    th:text="${type.getCarBodyTypeValue()}"></option>
+                        </select>
+                    </div>
+                    <input type="submit" value="submit" class="input-submit">
+                </div>
+            </form>
+            <form th:action="@{/main/reset-filter}" th:method="POST">
+                <input value="reset" type="submit" class="input-reject"/>
+            </form>
+        </div>
     <div class="card-container">
         <div class="card" th:each="vehicle : ${vehicles}">
             <div class="card-header" th:text="${vehicle.getCarBrand()}"></div>

@@ -19,9 +19,6 @@ public class RentedVehicleHistoryService {
     @Autowired
     private RentedVehicleHistoryRepo rentedVehicleHistoryRepo;
 
-    @Autowired
-    private VehicleService vehicleService;
-
     public void startRentHistory(User user, Vehicle vehicle, String hash) {
         RentedVehicleHistory rentedVehiclesHistory = new RentedVehicleHistory();
         rentedVehiclesHistory.setCarRenter(user);
@@ -31,7 +28,8 @@ public class RentedVehicleHistoryService {
         rentedVehicleHistoryRepo.save(rentedVehiclesHistory);
     }
 
-    public void completeLeaseHistoryRecord(String hash) {
+    public void completeLeaseHistoryRecord(int carId, User user, String hash) {
+        // recording renting complete time by renting car hash
         rentedVehicleHistoryRepo.saveRentedTime(LocalDateTime.now(), hash);
     }
 

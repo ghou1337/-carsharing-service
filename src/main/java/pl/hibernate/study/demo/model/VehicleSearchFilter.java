@@ -1,6 +1,7 @@
 package pl.hibernate.study.demo.model;
 
 import org.springframework.stereotype.Component;
+import pl.hibernate.study.demo.model.enums.CarBodyType;
 
 @Component
 public class VehicleSearchFilter {
@@ -9,6 +10,8 @@ public class VehicleSearchFilter {
     private String carBrand;
 
     private String priceRent;
+
+    private String carBodyType;
 
     public VehicleSearchFilter() {
     }
@@ -37,12 +40,22 @@ public class VehicleSearchFilter {
         this.priceRent = priceRent;
     }
 
+
+    public String getCarBodyType() {
+        return carBodyType;
+    }
+
+    public void setCarBodyType(String carBodyType) {
+        this.carBodyType = carBodyType;
+    }
+
     @Override
     public String toString() {
         return "VehicleSearchFilter{" +
-                "carYear=" + carYear +
+                "carYear='" + carYear + '\'' +
                 ", carBrand='" + carBrand + '\'' +
-                ", priceRent=" + priceRent +
+                ", priceRent='" + priceRent + '\'' +
+                ", selectedType='" + carBodyType + '\'' +
                 '}';
     }
 }

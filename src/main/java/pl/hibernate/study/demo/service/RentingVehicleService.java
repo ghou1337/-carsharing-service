@@ -10,8 +10,10 @@ import pl.hibernate.study.demo.repos.RentingVehicleRepo;
 import pl.hibernate.study.demo.service.exe.NotEnoughBalanceException;
 import pl.hibernate.study.demo.service.exe.RentHistoryWasNotRecorded;
 
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Scanner;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -23,9 +25,6 @@ public class RentingVehicleService  {
 
     @Autowired
     private VehicleService vehicleService;
-
-    @Autowired
-    private RentedVehicleHistoryService rentedVehicleHistoryService;
 
     public List<Vehicle> getAllUserCars(User user) {
         return rentingVehicleRepo.getAllByUser(user)
@@ -43,28 +42,19 @@ public class RentingVehicleService  {
         } else {
             throw new NotEnoughBalanceException("Error: Not enough money for the rent!");
         }
-        RentingVehicle rentedVehicle = new RentingVehicle();
-        rentedVehicle.setVehicle(vehicleById);
-        rentedVehicle.setUser(user);
-        rentedVehicle.setHash(UUID.randomUUID().toString());
-        rentingVehicleRepo.save(rentedVehicle);
+        RentingVehicle rentingVehicle = new RentingVehicle();
+        rentingVehicle.setVehicle(vehicleById);
+        rentingVehicle.setUser(user);
+        rentingVehicle.setHash(UUID.randomUUID().toString());
+        rentingVehicleRepo.save(rentingVehicle);
         vehicleService.setNullForRentedCar(vehicleId);
-
-        try {
-            rentedVehicleHistoryService.startRentHistory(user, vehicleById, rentedVehicle.getHash());
-        } catch (RentHistoryWasNotRecorded e) {
-            throw new RuntimeException("Error: Car was rented but history table didn't record this action", e);
-        }
     }
 
-    public void completeLease(int carId, User user) {
-        // recording renting complete time by renting car hash
-        rentedVehicleHistoryService.completeLeaseHistoryRecord(
-                rentingVehicleRepo.getByVehicle_IdAndUser_Id(carId, user.getId()).getHash());
+    public RentingVehicle getRentingCarByCarIdAndUserId(int carId, User user) {
+        return rentingVehicleRepo.getByVehicle_IdAndUser_Id(carId, user.getId());
+    }
+    public void completeLeaseActualRentingTable(int carId, User user) {
         // deleting renting car from "cars in rent" table
         rentingVehicleRepo.deleteByVehicle_IdAndUser(carId, user);
-
-        // making car available
-        vehicleService.carAvailable(carId);
     }
 }

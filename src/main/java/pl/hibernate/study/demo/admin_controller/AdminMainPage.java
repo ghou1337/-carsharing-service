@@ -33,7 +33,7 @@ public class AdminMainPage {
         if(bindingResult.hasErrors()){
             return "/admin_page/add-new-car-page";
         }
-        vehicleService.saveCar(vehicle);
+        vehicleService.saveNewCar(vehicle);
         return "redirect:/admin/add-new-car";
     }
 }

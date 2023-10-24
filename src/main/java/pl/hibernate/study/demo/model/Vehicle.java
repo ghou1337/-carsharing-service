@@ -18,7 +18,7 @@ public class Vehicle {
     private String carBrand;
     @NotNull(message = "Price shouldn't be empty")
     @Column(name = "price_rent")
-    private int priceRent;
+    private Integer priceRent;
     @NotNull(message = "Car year shouldn't be empty")
     @Column(name = "car_year")
     private int carYear;
@@ -27,6 +27,12 @@ public class Vehicle {
 
     @Column(name = "availability")
     private Boolean availability;
+
+    @Column(name = "car_class")
+    private String carClass;
+
+    @Column(name = "car_model")
+    private String carModel;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rentedCar")
     private List<RentedVehicleHistory> rentedVehicleHistories;
@@ -99,5 +105,21 @@ public class Vehicle {
 
     public void setRentedVehicles(List<RentedVehicleHistory> rentedVehicleHistories) {
         this.rentedVehicleHistories = rentedVehicleHistories;
+    }
+
+    public String getCarClass() {
+        return carClass;
+    }
+
+    public void setCarClass(String carClass) {
+        this.carClass = carClass;
+    }
+
+    public String getCarModel() {
+        return carModel;
+    }
+
+    public void setCarModel(String carModel) {
+        this.carModel = carModel;
     }
 }

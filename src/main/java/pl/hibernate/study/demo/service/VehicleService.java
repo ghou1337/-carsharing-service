@@ -15,37 +15,38 @@ public class VehicleService {
     @Autowired
     private  VehicleRepo vehicleRepo;
 
+    public List<Vehicle> getAllCars() {
+        return vehicleRepo.getAllByAvailabilityIsTrue();
+    }
+
     public Vehicle getCarById(int carID) {
         if(vehicleRepo.findById(carID).isPresent()) {
             return vehicleRepo.findById(carID).get();
-        }else
-            throw new RuntimeException("Car wan not found");
+        }else throw new RuntimeException("Car wan not found");
     }
 
     public void setNullForRentedCar(int id) {
         vehicleRepo.setAvailabilityToFalse(id);
     }
 
-    public void carAvailable(int id) {
+    public void setCarAvailable(int id) {
+        // making car available
         vehicleRepo.setAvailabilityToTrue(id);
     }
 
-    public List<Vehicle> getAllCars() {
-        return vehicleRepo.getAllByAvailabilityIsTrue();
-    }
-
-    public List<Vehicle> getAllCarsWithFilter(VehicleSearchFilter filter) {
-        filter.setCarYear(filter.getCarYear().isEmpty() ? "0" : filter.getCarYear());
-        filter.setPriceRent(filter.getPriceRent().isEmpty() ? "0" : filter.getPriceRent());
-
-        return vehicleRepo.getAllByCarBrandOrPriceRentOrCarYear(
-                filter.getCarBrand(),
-                Integer.parseInt(filter.getPriceRent()),
-                Integer.parseInt(filter.getCarYear()));
-    }
-
-    public void saveCar(Vehicle vehicle) {
+    public void saveNewCar(Vehicle vehicle) {
+        // save new car
         vehicle.setAvailability(true);
         vehicleRepo.save(vehicle);
+    }
+
+
+
+    public List<Vehicle> getAllCarsWithFilter(VehicleSearchFilter filter) {
+        return vehicleRepo.getAllByCarBrandOrPriceRentOrCarYear(
+                (filter.getCarBrand().isEmpty() ? null : filter.getCarBrand()),
+                (filter.getPriceRent().isEmpty() ? null : Integer.parseInt(filter.getPriceRent())),
+                (filter.getCarYear().isEmpty() ? null : Integer.parseInt(filter.getCarYear())),
+                (filter.getCarBodyType().equals("ALL") ? null : filter.getCarBodyType()));
     }
 }
