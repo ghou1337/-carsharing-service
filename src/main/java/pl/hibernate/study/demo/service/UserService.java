@@ -31,19 +31,16 @@ public class UserService {
         return userRepo.findByUsername(username);
     }
 
-    public void register(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER");
-        userRepo.save(user);
-    }
-
     public User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsConfig userDetailsConfig = (UserDetailsConfig)authentication.getPrincipal();
         return findUserById(userDetailsConfig.user().getId());
     }
 
-    public int getAuthenticatedUserId() {
-        return getAuthenticatedUser().getId();
+    @Transactional
+    public void registerNewUser(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("USER");
+        userRepo.save(user);
     }
 }

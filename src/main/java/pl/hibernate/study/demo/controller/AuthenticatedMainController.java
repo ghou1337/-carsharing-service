@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.hibernate.study.demo.model.CarClassFilter;
 import pl.hibernate.study.demo.model.User;
 import pl.hibernate.study.demo.model.Vehicle;
 import pl.hibernate.study.demo.model.VehicleSearchFilter;
@@ -43,7 +42,7 @@ public class AuthenticatedMainController {
     }
 
     @GetMapping
-    public String showMainPage(@ModelAttribute("search_filter_updated") VehicleSearchFilter vehicleSearchFilter, Vehicle vehicle, Model model) {
+    public String showMainPage(@ModelAttribute("search_filter_updated") VehicleSearchFilter vehicleSearchFilter, Model model) {
         model.addAttribute("search_filter_updated", vehicleSearchFilter);
         List<Vehicle> vehicles = (!searchFilter)
                 ? vehicleService.getAllCars() : vehicleService.getAllCarsWithFilter(vehicleSearchFilter);
@@ -60,47 +59,41 @@ public class AuthenticatedMainController {
 
     @PostMapping("/filter")
     public String searchFilter(VehicleSearchFilter vehicleSearchFilter,
-                               RedirectAttributes redirectAttributes) {
+                               RedirectAttributes redirectAttributes, Model model) {
         searchFilter = true;
         redirectAttributes.addFlashAttribute("search_filter_updated", vehicleSearchFilter);
-        System.out.println(vehicleSearchFilter.toString() + " " + searchFilter);
         return "redirect:/main";
     }
 
     @PatchMapping("/{vehicleId}")
-    public String startRent(@PathVariable("vehicleId") int vehicleId, RedirectAttributes redirectAttributes) {
-        Vehicle rentingCar = vehicleService.getCarById(vehicleId);
+    public String startRent(@PathVariable("vehicleId") int carId, RedirectAttributes redirectAttributes) {
+        Vehicle rentingCar = vehicleService.getCarById(carId);
         try {
-            rentingVehicleService.rentCar(getUser(), vehicleId);
-            redirectAttributes.
-                    addFlashAttribute("success_message", "The car was successfully rented!");
+            rentingVehicleService.rentCar(getUser(), carId);
+            vehicleService.setCarNotAvailable(carId);
+            redirectAttributes.addFlashAttribute("success_message", "The car was successfully rented!");
         } catch (NotEnoughBalanceException e) {
             redirectAttributes.addFlashAttribute("error_message", e.getMessage() );
         }
-        // car hash for same unique hash in actual renting car and history record
-        String carHash = rentingVehicleService.getRentingCarByCarIdAndUserId(vehicleId, getUser()).getHash();
         try {
-            // starting rent history record
-            rentedVehicleHistoryService.startRentHistory(getUser(), rentingCar, carHash);
+            rentedVehicleHistoryService.startRentHistory(getUser(), rentingCar, getCarHash(carId)); // starting rent history record
         } catch (RentHistoryWasNotRecorded e) {
             throw new RuntimeException("Error: Car was rented but history table didn't record this action", e);
         }
+        searchFilter = false;
         return "redirect:/main";
     }
 
     @DeleteMapping("/delete/{id}")
     public String completeLease(@PathVariable("id") int carId) {
-        String carHash = rentingVehicleService.getRentingCarByCarIdAndUserId(carId, getUser()).getHash();
-
-        rentedVehicleHistoryService.completeLeaseHistoryRecord(carId, getUser(), carHash);
+        rentedVehicleHistoryService.completeLeaseHistoryRecord(getCarHash(carId));
         rentingVehicleService.completeLeaseActualRentingTable(carId, getUser());
         vehicleService.setCarAvailable(carId);
+        searchFilter = false;
         return "redirect:/main";
     }
 
-//    @PatchMapping("/car-class")
-//    public String classFilter(@ModelAttribute("carClass") CarClassFilter carClassFilter) {
-//        System.out.println("path: " + carClassFilter.getCarClass());
-//        return "redirect:/main";
-//    }
+    private String getCarHash(int carId) {
+        return rentingVehicleService.getRentingCarByCarIdAndUser(carId, getUser()).getHash();
+    }
 }

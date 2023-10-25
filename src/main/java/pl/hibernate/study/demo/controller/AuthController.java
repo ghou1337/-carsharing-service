@@ -38,7 +38,7 @@ public class AuthController {
         userAuthenticationValidator.validate(user, bindingResult);
         if(bindingResult.hasErrors())
             return "/registration-page";
-        userService.register(user);
+        userService.registerNewUser(user);
         return "redirect:/registration-page";
     }
 }

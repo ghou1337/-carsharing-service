@@ -49,6 +49,21 @@ public class VehicleSearchFilter {
         this.carBodyType = carBodyType;
     }
 
+    public void setBasicValues() {
+        this.carYear = "";
+        this.carBrand = "";
+        this.priceRent = "";
+        this.carBodyType = "All";
+    }
+
+    public Boolean isEmpty() {
+        this.carYear = "";
+        this.carBrand = "";
+        this.priceRent = "";
+        this.carBodyType = "";
+        return true;
+    }
+
     @Override
     public String toString() {
         return "VehicleSearchFilter{" +

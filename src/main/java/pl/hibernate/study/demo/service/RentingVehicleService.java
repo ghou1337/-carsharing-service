@@ -2,6 +2,7 @@ package pl.hibernate.study.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.hibernate.study.demo.model.RentedVehicleHistory;
 import pl.hibernate.study.demo.model.RentingVehicle;
 import pl.hibernate.study.demo.model.User;
@@ -33,10 +34,20 @@ public class RentingVehicleService  {
                 .collect(Collectors.toList());
     }
 
+    public RentingVehicle getRentingCarByCarIdAndUser(int carId, User user){
+        return rentingVehicleRepo.getByVehicle_IdAndUser_Id(carId, user.getId());
+    }
+    @Transactional
+    public void completeLeaseActualRentingTable(int carId, User user) {
+        // deleting renting car from "cars in rent" table
+        rentingVehicleRepo.deleteByVehicle_IdAndUser(carId, user);
+    }
+
+    @Transactional
     public void rentCar(User user, int vehicleId) throws NotEnoughBalanceException {
         Vehicle vehicleById = vehicleService.getCarById(vehicleId);
         float actualMoney = user.getMoney();
-        float priceRent = vehicleService.getCarById(vehicleId).getPriceRent();
+        float priceRent = vehicleById.getPriceRent();
         if (actualMoney >= priceRent) {
             user.setMoney(actualMoney - priceRent);
         } else {
@@ -47,14 +58,5 @@ public class RentingVehicleService  {
         rentingVehicle.setUser(user);
         rentingVehicle.setHash(UUID.randomUUID().toString());
         rentingVehicleRepo.save(rentingVehicle);
-        vehicleService.setNullForRentedCar(vehicleId);
-    }
-
-    public RentingVehicle getRentingCarByCarIdAndUserId(int carId, User user) {
-        return rentingVehicleRepo.getByVehicle_IdAndUser_Id(carId, user.getId());
-    }
-    public void completeLeaseActualRentingTable(int carId, User user) {
-        // deleting renting car from "cars in rent" table
-        rentingVehicleRepo.deleteByVehicle_IdAndUser(carId, user);
     }
 }

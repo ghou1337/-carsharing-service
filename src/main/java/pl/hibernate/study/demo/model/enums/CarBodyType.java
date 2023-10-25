@@ -1,13 +1,12 @@
 package pl.hibernate.study.demo.model.enums;
 
 public enum CarBodyType {
+    ALL("All"),
     SEDAN("Sedan"),
     SUV("Suv"),
     COUPE("Coupe"),
     HATCHBACK("Hatchback"),
-    COMPACT("Compact"),
-    OTHER("Other"),
-    ALL("All");
+    COMPACT("Compact");
 
     private final String carBodyTypeValue;
     CarBodyType(String carBodyTypeValue) {

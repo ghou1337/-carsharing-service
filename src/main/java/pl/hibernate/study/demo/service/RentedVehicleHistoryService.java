@@ -7,6 +7,7 @@ import pl.hibernate.study.demo.model.RentedVehicleHistory;
 import pl.hibernate.study.demo.model.User;
 import pl.hibernate.study.demo.model.Vehicle;
 import pl.hibernate.study.demo.repos.RentedVehicleHistoryRepo;
+import pl.hibernate.study.demo.service.exe.RentHistoryWasNotRecorded;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -25,10 +26,14 @@ public class RentedVehicleHistoryService {
         rentedVehiclesHistory.setRentedCar(vehicle);
         rentedVehiclesHistory.setRentStartAt(LocalDateTime.now());
         rentedVehiclesHistory.setHash(hash);
-        rentedVehicleHistoryRepo.save(rentedVehiclesHistory);
+        try {
+            rentedVehicleHistoryRepo.save(rentedVehiclesHistory); // starting rent history record
+        } catch (RentHistoryWasNotRecorded e) {
+            throw new RuntimeException("Error: Car was rented but history table didn't record this action", e);
+        }
     }
 
-    public void completeLeaseHistoryRecord(int carId, User user, String hash) {
+    public void completeLeaseHistoryRecord(String hash) {
         // recording renting complete time by renting car hash
         rentedVehicleHistoryRepo.saveRentedTime(LocalDateTime.now(), hash);
     }
