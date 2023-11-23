@@ -1,4 +1,4 @@
-### Developing Demo Carsharing Service.
+### Demo Carsharing Service.
 Welcome to the repository of my demo carsharing service. This project focuses on creating a comprehensive carsharing platform with a range of features. Below, you'll find an overview of the functionalities and a glimpse into the service.
 
 ## Carsharing Service
