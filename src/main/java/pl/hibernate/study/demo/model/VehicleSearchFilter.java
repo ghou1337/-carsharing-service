@@ -5,9 +5,17 @@ import pl.hibernate.study.demo.model.enums.CarBodyType;
 
 @Component
 public class VehicleSearchFilter {
+    private String minCarYear;
+
+    private String maxCarYear;
+
     private String carYear;
 
     private String carBrand;
+
+    private String minPriceRent;
+
+    private String maxPriceRent;
 
     private String priceRent;
 
@@ -47,6 +55,38 @@ public class VehicleSearchFilter {
 
     public void setCarBodyType(String carBodyType) {
         this.carBodyType = carBodyType;
+    }
+
+    public String getMinCarYear() {
+        return minCarYear;
+    }
+
+    public void setMinCarYear(String minCarYear) {
+        this.minCarYear = minCarYear;
+    }
+
+    public String getMaxCarYear() {
+        return maxCarYear;
+    }
+
+    public void setMaxCarYear(String maxCarYear) {
+        this.maxCarYear = maxCarYear;
+    }
+
+    public String getMinPriceRent() {
+        return minPriceRent;
+    }
+
+    public void setMinPriceRent(String minPriceRent) {
+        this.minPriceRent = minPriceRent;
+    }
+
+    public String getMaxPriceRent() {
+        return maxPriceRent;
+    }
+
+    public void setMaxPriceRent(String maxPriceRent) {
+        this.maxPriceRent = maxPriceRent;
     }
 
     public void setBasicValues() {

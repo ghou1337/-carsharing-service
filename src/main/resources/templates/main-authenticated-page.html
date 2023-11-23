@@ -42,8 +42,10 @@
                 <p>Search filter</p>
                 <div class="search-filter-input-container">
                     <input th:field="*{carBrand}" type="text" placeholder="brand"/>
-                    <input th:field="*{carYear}" type="number" placeholder="year"/>
-                    <input th:field="*{priceRent}" type="number" placeholder="price"/>
+                    <input th:field="*{minCarYear}" type="number" placeholder="year from"/>
+                    <input th:field="*{maxCarYear}" type="number" placeholder="year to"/>
+                    <input th:field="*{minPriceRent}" type="number" placeholder="min price"/>
+                    <input th:field="*{maxPriceRent}" type="number" placeholder="max price"/>
                     <div class="select-container">
                         <select th:field="*{carBodyType}">
                             <option th:each="type : ${T(pl.hibernate.study.demo.model.enums.CarBodyType).values()}"

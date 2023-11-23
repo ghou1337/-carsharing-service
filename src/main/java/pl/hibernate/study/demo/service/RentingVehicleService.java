@@ -39,8 +39,7 @@ public class RentingVehicleService  {
     }
     @Transactional
     public void completeLeaseActualRentingTable(int carId, User user) {
-        // deleting renting car from "cars in rent" table
-        rentingVehicleRepo.deleteByVehicle_IdAndUser(carId, user);
+        rentingVehicleRepo.deleteByVehicle_IdAndUser(carId, user); // delete renting car from "renting_vehicles" table
     }
 
     @Transactional

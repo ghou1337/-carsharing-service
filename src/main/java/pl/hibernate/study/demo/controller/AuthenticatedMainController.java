@@ -44,8 +44,7 @@ public class AuthenticatedMainController {
     @GetMapping
     public String showMainPage(@ModelAttribute("search_filter_updated") VehicleSearchFilter vehicleSearchFilter, Model model) {
         model.addAttribute("search_filter_updated", vehicleSearchFilter);
-        List<Vehicle> vehicles = (!searchFilter)
-                ? vehicleService.getAllCars() : vehicleService.getAllCarsWithFilter(vehicleSearchFilter);
+        List<Vehicle> vehicles = (!searchFilter) ? vehicleService.getAllCars() : vehicleService.getAllCarsWithFilterWithinTheBoundaries(vehicleSearchFilter);
         model.addAttribute("vehicles", vehicles);
         model.addAttribute("user_car", rentingVehicleService.getAllUserCars(getUser()));
         model.addAttribute("user_data", getUser());

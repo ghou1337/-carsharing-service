@@ -25,7 +25,7 @@ public class PublicMainController {
         if(searchFilter == false) {
             vehicles = vehicleService.getAllCars();
         } else {
-            vehicles = vehicleService.getAllCarsWithFilter(vehicleSearchFilter);
+            vehicles = vehicleService.getAllCarsWithFilterWithinTheBoundaries(vehicleSearchFilter);
         }
         model.addAttribute("vehicles", vehicles);
         return "main-page";

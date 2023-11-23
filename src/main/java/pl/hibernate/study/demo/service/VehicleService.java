@@ -15,9 +15,6 @@ public class VehicleService {
     private  VehicleRepo vehicleRepo;
 
     public List<Vehicle> getAllCarsWithFilter(VehicleSearchFilter filter) {
-//        if(filter.isEmpty()) {
-//            filter.setBasicValues();
-//        }
         return vehicleRepo.getAllByCarBrandOrPriceRentOrCarYear(
                 (filter.getCarBrand().isEmpty() ? null : filter.getCarBrand()),
                 (filter.getPriceRent().isEmpty() ? null : Integer.parseInt(filter.getPriceRent())),
@@ -25,6 +22,15 @@ public class VehicleService {
                 (filter.getCarBodyType().equals("ALL") ? null : filter.getCarBodyType()));
     }
 
+    public List<Vehicle> getAllCarsWithFilterWithinTheBoundaries(VehicleSearchFilter filter) {
+        return vehicleRepo.getAllCarsByFilterValues(
+                (filter.getCarBrand().isEmpty() ? null : filter.getCarBrand()),
+                (filter.getMinPriceRent().isEmpty() ? null : Integer.parseInt(filter.getMinPriceRent())),
+                (filter.getMaxPriceRent().isEmpty() ? null : Integer.parseInt(filter.getMaxPriceRent())),
+                (filter.getMinCarYear().isEmpty() ? null : Integer.parseInt(filter.getMinCarYear())),
+                (filter.getMaxCarYear().isEmpty() ? null : Integer.parseInt(filter.getMaxCarYear())),
+                (filter.getCarBodyType().equals("ALL") ? null : filter.getCarBodyType()));
+    }
     public List<Vehicle> getAllCars() {
         return vehicleRepo.getAllByAvailabilityIsTrue();
     }
@@ -40,13 +46,11 @@ public class VehicleService {
     }
     @Transactional
     public void setCarAvailable(int id) {
-        // making car available
-        vehicleRepo.setAvailabilityToTrue(id);
+        vehicleRepo.setAvailabilityToTrue(id); // do car available
     }
     @Transactional
     public void saveNewCar(Vehicle vehicle) {
-        // save new car
         vehicle.setAvailability(true);
-        vehicleRepo.save(vehicle);
+        vehicleRepo.save(vehicle); // save new car and make available
     }
 }
