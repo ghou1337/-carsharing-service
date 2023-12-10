@@ -1,53 +1,59 @@
 package pl.hibernate.study.demo.model;
 
+import jakarta.persistence.Entity;
 import org.springframework.stereotype.Component;
 import pl.hibernate.study.demo.model.enums.CarBodyType;
 
-@Component
+import javax.validation.constraints.Size;
+
 public class VehicleSearchFilter {
-    private String minCarYear;
+    @Size(min = 1980, max = 2030, message = "wrong min year")
+    private Integer minCarYear;
 
-    private String maxCarYear;
+    @Size(min = 1980, max = 2030, message = "wrong max year")
+    private Integer maxCarYear;
 
-    private String carYear;
+    private Integer minPriceRent;
 
-    private String carBrand;
-
-    private String minPriceRent;
-
-    private String maxPriceRent;
-
-    private String priceRent;
+    private Integer maxPriceRent;
 
     private String carBodyType;
 
+    private String carBrand;
     public VehicleSearchFilter() {
     }
 
-    public String getCarYear() {
-        return carYear;
+    public Integer getMinCarYear() {
+        return minCarYear;
     }
 
-    public void setCarYear(String carYear) {
-        this.carYear = carYear;
+    public void setMinCarYear(Integer minCarYear) {
+        this.minCarYear = minCarYear;
     }
 
-    public String getCarBrand() {
-        return carBrand;
+    public Integer getMaxCarYear() {
+        return maxCarYear;
     }
 
-    public void setCarBrand(String carBrand) {
-        this.carBrand = carBrand;
+    public void setMaxCarYear(Integer maxCarYear) {
+        this.maxCarYear = maxCarYear;
     }
 
-    public String getPriceRent() {
-        return priceRent;
+    public Integer getMinPriceRent() {
+        return minPriceRent;
     }
 
-    public void setPriceRent(String priceRent) {
-        this.priceRent = priceRent;
+    public void setMinPriceRent(Integer minPriceRent) {
+        this.minPriceRent = minPriceRent;
     }
 
+    public Integer getMaxPriceRent() {
+        return maxPriceRent;
+    }
+
+    public void setMaxPriceRent(Integer maxPriceRent) {
+        this.maxPriceRent = maxPriceRent;
+    }
 
     public String getCarBodyType() {
         return carBodyType;
@@ -57,60 +63,11 @@ public class VehicleSearchFilter {
         this.carBodyType = carBodyType;
     }
 
-    public String getMinCarYear() {
-        return minCarYear;
+    public String getCarBrand() {
+        return carBrand;
     }
 
-    public void setMinCarYear(String minCarYear) {
-        this.minCarYear = minCarYear;
-    }
-
-    public String getMaxCarYear() {
-        return maxCarYear;
-    }
-
-    public void setMaxCarYear(String maxCarYear) {
-        this.maxCarYear = maxCarYear;
-    }
-
-    public String getMinPriceRent() {
-        return minPriceRent;
-    }
-
-    public void setMinPriceRent(String minPriceRent) {
-        this.minPriceRent = minPriceRent;
-    }
-
-    public String getMaxPriceRent() {
-        return maxPriceRent;
-    }
-
-    public void setMaxPriceRent(String maxPriceRent) {
-        this.maxPriceRent = maxPriceRent;
-    }
-
-    public void setBasicValues() {
-        this.carYear = "";
-        this.carBrand = "";
-        this.priceRent = "";
-        this.carBodyType = "All";
-    }
-
-    public Boolean isEmpty() {
-        this.carYear = "";
-        this.carBrand = "";
-        this.priceRent = "";
-        this.carBodyType = "";
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "VehicleSearchFilter{" +
-                "carYear='" + carYear + '\'' +
-                ", carBrand='" + carBrand + '\'' +
-                ", priceRent='" + priceRent + '\'' +
-                ", selectedType='" + carBodyType + '\'' +
-                '}';
+    public void setCarBrand(String carBrand) {
+        this.carBrand = carBrand;
     }
 }

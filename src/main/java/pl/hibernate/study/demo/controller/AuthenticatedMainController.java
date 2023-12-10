@@ -1,5 +1,6 @@
 package pl.hibernate.study.demo.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,37 +15,32 @@ import pl.hibernate.study.demo.service.UserService;
 import pl.hibernate.study.demo.service.VehicleService;
 import pl.hibernate.study.demo.service.exe.NotEnoughBalanceException;
 import pl.hibernate.study.demo.service.exe.RentHistoryWasNotRecorded;
+import pl.hibernate.study.demo.service.search_filter.VehicleSearchFilterService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequestMapping("/main")
+@RequiredArgsConstructor
 public class AuthenticatedMainController {
     private final UserService userService;
     private final VehicleService vehicleService;
     private final RentingVehicleService rentingVehicleService;
     private final RentedVehicleHistoryService rentedVehicleHistoryService;
+    private final VehicleSearchFilterService vehicleSearchFilterService;
     private Boolean searchFilter = false;
 
     private Boolean classFilter = false;
-
-    @Autowired
-    public AuthenticatedMainController(UserService userService, VehicleService vehicleService,
-                                       RentingVehicleService rentingVehicleService, RentedVehicleHistoryService rentedVehicleHistoryService) {
-        this.userService = userService;
-        this.vehicleService = vehicleService;
-        this.rentingVehicleService = rentingVehicleService;
-        this.rentedVehicleHistoryService = rentedVehicleHistoryService;
-    }
 
     private User getUser() {
         return userService.getAuthenticatedUser();
     }
 
     @GetMapping
-    public String showMainPage(@ModelAttribute("search_filter_updated") VehicleSearchFilter vehicleSearchFilter, Model model) {
+    public String showMainPage(@ModelAttribute("search_filter_updated") @Valid VehicleSearchFilter vehicleSearchFilter, Model model) {
         model.addAttribute("search_filter_updated", vehicleSearchFilter);
-        List<Vehicle> vehicles = (!searchFilter) ? vehicleService.getAllCars() : vehicleService.getAllCarsWithFilterWithinTheBoundaries(vehicleSearchFilter);
+        List<Vehicle> vehicles = (!searchFilter) ? vehicleService.getAllCars() : vehicleSearchFilterService.getAllCarsWithFilterBoundaries(vehicleSearchFilter);
         model.addAttribute("vehicles", vehicles);
         model.addAttribute("user_car", rentingVehicleService.getAllUserCars(getUser()));
         model.addAttribute("user_data", getUser());

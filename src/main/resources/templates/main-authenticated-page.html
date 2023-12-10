@@ -42,7 +42,9 @@
                 <p>Search filter</p>
                 <div class="search-filter-input-container">
                     <input th:field="*{carBrand}" type="text" placeholder="brand"/>
+                    <div th:if="${param.error}" class="error-message">Error</div>
                     <input th:field="*{minCarYear}" type="number" placeholder="year from"/>
+                    <div th:if="${param.error}" class="error-message">Error</div>
                     <input th:field="*{maxCarYear}" type="number" placeholder="year to"/>
                     <input th:field="*{minPriceRent}" type="number" placeholder="min price"/>
                     <input th:field="*{maxPriceRent}" type="number" placeholder="max price"/>

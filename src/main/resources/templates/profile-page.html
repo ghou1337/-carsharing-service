@@ -27,7 +27,7 @@
         <tr th:each="rentedcar : ${rentedCars}">
             <td th:text="${rentedcar.getRentedCar().getCarBrand()}">Brand</td>
             <td th:text="${rentedcar.getRentedCar().getCarYear()}">Year</td>
-            <td th:text="${rentedcar.getRentedCar().getPriceRent()} + 'usd/hour'">Price</td>
+            <td th:text="${rentedcar.getRentedCar().getPriceRent()} + ' usd/hour'">Price</td>
             <td th:text="${rentedcar.getRentDuration()} + ' min'">Duration</td>
             <td th:text="${rentedcar.getRentStartAtToString()} + ''">Duration</td>
             <td th:text="${rentedcar.getRentCost()} + '$'">Costs</td>

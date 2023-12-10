@@ -44,7 +44,7 @@ public class Vehicle {
 
     public Vehicle() {
     }
-    public Vehicle(int id, String carBrand, int priceRent, int carYear) {
+    public Vehicle(int id, String carBrand, Integer priceRent, int carYear) {
         this.id = id;
         this.carBrand = carBrand;
         this.priceRent = priceRent;
@@ -71,7 +71,7 @@ public class Vehicle {
         return priceRent;
     }
 
-    public void setPriceRent(int priceRent) {
+    public void setPriceRent(Integer priceRent) {
         this.priceRent = priceRent;
     }
 

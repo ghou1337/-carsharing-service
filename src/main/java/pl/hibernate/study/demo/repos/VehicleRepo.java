@@ -23,16 +23,6 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Integer>, JpaSpecifi
     @Modifying
     @Query("SELECT v FROM Vehicle v " +
             "WHERE (:carBrand IS NULL OR v.carBrand = :carBrand) " +
-            "AND (:priceRent IS NULL OR v.priceRent >= :priceRent) " +
-            "AND (:carYear IS NULL OR v.carYear >= :carYear) " +
-            "AND (:carBodyType IS NULL OR v.carClass = :carBodyType)" +
-            "AND v.availability = true")
-    List<Vehicle> getAllByCarBrandOrPriceRentOrCarYear(String carBrand, Integer priceRent, Integer carYear, String carBodyType);
-
-
-    @Modifying
-    @Query("SELECT v FROM Vehicle v " +
-            "WHERE (:carBrand IS NULL OR v.carBrand = :carBrand) " +
             "AND (:minPriceRent IS NULL OR v.priceRent >= :minPriceRent) " +
             "AND (:maxPriceRent IS NULL OR v.priceRent <= :maxPriceRent) " +
             "AND (:minCarYear IS NULL OR v.carYear >= :minCarYear) " +
