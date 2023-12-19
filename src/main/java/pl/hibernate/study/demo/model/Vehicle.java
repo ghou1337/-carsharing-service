@@ -2,8 +2,9 @@ package pl.hibernate.study.demo.model;
 
 import jakarta.persistence.*;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 @Entity
@@ -44,11 +45,16 @@ public class Vehicle {
 
     public Vehicle() {
     }
-    public Vehicle(int id, String carBrand, Integer priceRent, int carYear) {
+
+    public Vehicle(int id, String carBrand, Integer priceRent, int carYear, String imageUrl, Boolean availability, String carClass, String carModel) {
         this.id = id;
         this.carBrand = carBrand;
         this.priceRent = priceRent;
         this.carYear = carYear;
+        this.imageUrl = imageUrl;
+        this.availability = availability;
+        this.carClass = carClass;
+        this.carModel = carModel;
     }
 
     public int getId() {

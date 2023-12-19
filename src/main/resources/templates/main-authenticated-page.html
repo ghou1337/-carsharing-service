@@ -18,7 +18,7 @@
     <h1>Hello, <label th:text="${user_data.getName()}"/></h1>
     <div th:if="${error_message}" style="color: red;" class="message"><p th:text="${error_message}">message</p></div>
     <div th:if="${success_message}" style="color: green;" class="message"><p th:text="${success_message}">message</p></div>
-    <h1>Your money: <span th:text="${user_data.getMoneyInt()} + '$'"/></h1>
+    <h1>Your money: <span th:text="${user_data.getMoney()} + '$'"/></h1>
     <form th:action="@{/logout}" method="post">
         <input type="submit" value="Sign Out" class="input-reject"/>
     </form>
@@ -50,7 +50,7 @@
                     <input th:field="*{maxPriceRent}" type="number" placeholder="max price"/>
                     <div class="select-container">
                         <select th:field="*{carBodyType}">
-                            <option th:each="type : ${T(pl.hibernate.study.demo.model.enums.CarBodyType).values()}"
+                            <option th:each="type : ${T(pl.hibernate.study.demo.model.enums.CarBodyTypes).values()}"
                                     th:value="${type}"
                                     th:text="${type.getCarBodyTypeValue()}"></option>
                         </select>

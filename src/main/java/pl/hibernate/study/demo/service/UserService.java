@@ -15,7 +15,6 @@ import pl.hibernate.study.demo.security.UserDetailsConfig;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class UserService {
     @Autowired
     private UserRepo userRepo;

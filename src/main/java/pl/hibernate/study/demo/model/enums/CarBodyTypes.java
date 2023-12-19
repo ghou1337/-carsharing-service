@@ -1,6 +1,6 @@
 package pl.hibernate.study.demo.model.enums;
 
-public enum CarBodyType {
+public enum CarBodyTypes {
     ALL("All"),
     SEDAN("Sedan"),
     SUV("Suv"),
@@ -9,7 +9,7 @@ public enum CarBodyType {
     COMPACT("Compact");
 
     private final String carBodyTypeValue;
-    CarBodyType(String carBodyTypeValue) {
+    CarBodyTypes(String carBodyTypeValue) {
         this.carBodyTypeValue = carBodyTypeValue;
     }
 

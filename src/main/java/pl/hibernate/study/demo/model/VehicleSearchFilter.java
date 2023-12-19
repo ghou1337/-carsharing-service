@@ -1,9 +1,5 @@
 package pl.hibernate.study.demo.model;
 
-import jakarta.persistence.Entity;
-import org.springframework.stereotype.Component;
-import pl.hibernate.study.demo.model.enums.CarBodyType;
-
 import javax.validation.constraints.Size;
 
 public class VehicleSearchFilter {

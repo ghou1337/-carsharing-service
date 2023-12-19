@@ -1,9 +1,10 @@
 package pl.hibernate.study.demo.model;
 
 import jakarta.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 
 @Entity
@@ -15,23 +16,23 @@ public class User {
     private int id;
     @NotEmpty(message = "Shouldn't be empty")
     @Size(min = 3, max = 30, message = "Login should be grater then 3 characters")
-    @Column(name = "login")
     private String username;
+
     @NotEmpty(message = "Shouldn't be empty")
-    @Size(min = 3, max = 30, message = "Password should be grater then 3 characters")
-    @Column(name = "password")
+    @Size(min = 3, max = 60, message = "Password should be grater then 3 characters")
     private String password;
     @NotEmpty(message = "Shouldn't be empty")
     @Email
     @Size(min = 3, max = 30, message = "Login should be grater then 3 characters")
-    @Column(name = "email")
     private String email;
-    @Column(name = "name")
+    @NotEmpty(message = "Shouldn't be empty")
+    @Size(min = 3, max = 30, message = "Name should be grater then 3 characters")
     private String name;
     @Column(name = "permissions")
     private String role;
-    @Column(name = "money")
+
     private float money;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "carRenter")
     private List<RentedVehicleHistory> rentingUsers;
 
@@ -41,13 +42,14 @@ public class User {
     public User() {
     }
 
-    public User(int id, String username, String password, String email, String name, float money) {
+    public User(int id, String username, String password, String email, String name, float money, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.name = name;
         this.money = money;
+        this.role = role;
     }
 
     public int getId() {
@@ -104,10 +106,6 @@ public class User {
 
     public void setMoney(float money) {
         this.money = money;
-    }
-
-    public Integer getMoneyInt() {
-        return Math.round(this.money);
     }
 
 }

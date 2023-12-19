@@ -2,6 +2,7 @@ package pl.hibernate.study.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,10 +35,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public String registerUser(@ModelAttribute("user")@Valid User user, BindingResult bindingResult, Model model) {
         userAuthenticationValidator.validate(user, bindingResult);
-        if(bindingResult.hasErrors())
-            return "/registration-page";
+        if(bindingResult.hasErrors()) {
+            return "registration-page";
+        }
         userService.registerNewUser(user);
         return "redirect:/registration-page";
     }

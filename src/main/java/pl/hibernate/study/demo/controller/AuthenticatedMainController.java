@@ -1,7 +1,6 @@
 package pl.hibernate.study.demo.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +39,7 @@ public class AuthenticatedMainController {
     @GetMapping
     public String showMainPage(@ModelAttribute("search_filter_updated") @Valid VehicleSearchFilter vehicleSearchFilter, Model model) {
         model.addAttribute("search_filter_updated", vehicleSearchFilter);
-        List<Vehicle> vehicles = (!searchFilter) ? vehicleService.getAllCars() : vehicleSearchFilterService.getAllCarsWithFilterBoundaries(vehicleSearchFilter);
+        List<Vehicle> vehicles = (!searchFilter) ? vehicleService.getAllAvailableCars() : vehicleSearchFilterService.getAllCarsWithFilterBoundaries(vehicleSearchFilter);
         model.addAttribute("vehicles", vehicles);
         model.addAttribute("user_car", rentingVehicleService.getAllUserCars(getUser()));
         model.addAttribute("user_data", getUser());
@@ -54,7 +53,7 @@ public class AuthenticatedMainController {
 
     @PostMapping("/filter")
     public String searchFilter(VehicleSearchFilter vehicleSearchFilter,
-                               RedirectAttributes redirectAttributes, Model model) {
+                               RedirectAttributes redirectAttributes) {
         searchFilter = true;
         redirectAttributes.addFlashAttribute("search_filter_updated", vehicleSearchFilter);
         return "redirect:/main";

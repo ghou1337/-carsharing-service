@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.hibernate.study.demo.model.Vehicle;
 import pl.hibernate.study.demo.repos.VehicleRepo;
-import pl.hibernate.study.demo.service.search_filter.VehicleSearchFilterService;
 
 import java.util.List;
 
@@ -14,14 +13,14 @@ public class VehicleService {
     @Autowired
     private VehicleRepo vehicleRepo;
 
-    public List<Vehicle> getAllCars() {
+    public List<Vehicle> getAllAvailableCars() {
         return vehicleRepo.getAllByAvailabilityIsTrue();
     }
 
     public Vehicle getCarById(int carID) {
         if(vehicleRepo.findById(carID).isPresent()) {
             return vehicleRepo.findById(carID).get();
-        }else throw new RuntimeException("Car wan not found");
+        }else throw new RuntimeException("Car was not found");
     }
     @Transactional
     public void setCarNotAvailable(int id) {

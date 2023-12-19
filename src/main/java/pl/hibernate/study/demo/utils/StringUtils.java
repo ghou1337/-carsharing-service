@@ -1,7 +1,7 @@
 package pl.hibernate.study.demo.utils;
 
 public class StringUtils {
-    public static String capitalizeFirstLetter(String input) {
+    public static String capitalizeFirstLetter(String input) { // method for capitalizing first letter of string
         if (input == null || input.isEmpty()) {
             return input;
         }

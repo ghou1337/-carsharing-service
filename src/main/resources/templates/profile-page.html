@@ -8,7 +8,7 @@
 <body>
 <div class="user-profile">
     <a th:text="'You: ' + ${user.getName()}">Name</a>
-    <a th:text="'Balance: ' + ${user.getMoneyInt()} + '$'">Balance</a>
+    <a th:text="'Balance: ' + ${user.getMoney()} + '$'">Balance</a>
 </div>
 <div class="rented-car-history-table">
     <table class="compact-table">

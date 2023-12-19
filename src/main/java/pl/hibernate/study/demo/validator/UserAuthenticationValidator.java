@@ -25,7 +25,7 @@ public class UserAuthenticationValidator implements Validator {
     public void validate(Object target, Errors errors) throws RuntimeException {
         User user = (User) target;
         if (userService.findByUsername(user.getUsername()).isPresent()) {
-            errors.rejectValue("login", "", "User already exist");
+            errors.rejectValue("username", "", "User already exist");
         }
     }
 }

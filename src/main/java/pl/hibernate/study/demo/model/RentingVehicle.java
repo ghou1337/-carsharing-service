@@ -1,9 +1,6 @@
 package pl.hibernate.study.demo.model;
 
-
 import jakarta.persistence.*;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "renting_vehicles")

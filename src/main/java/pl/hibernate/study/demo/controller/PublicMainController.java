@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import pl.hibernate.study.demo.model.Vehicle;
 import pl.hibernate.study.demo.model.VehicleSearchFilter;
 import pl.hibernate.study.demo.service.VehicleService;
@@ -28,7 +27,7 @@ public class PublicMainController {
                                Model model) {
         List<Vehicle> vehicles;
         if(searchFilter == false) {
-            vehicles = vehicleService.getAllCars();
+            vehicles = vehicleService.getAllAvailableCars();
         } else {
             vehicles = vehicleSearchFilterService.getAllCarsWithFilterBoundaries(vehicleSearchFilter);
         }
