@@ -1,4 +1,3 @@
-=======
 # Demo Carsharing Service
 Welcome to the repository of my demo carsharing service. This project focuses on creating a comprehensive carsharing platform with a range of features. Below, you'll find an overview of the functionalities and a glimpse into the service.
 ![image](https://github.com/ghou1337/-carsharing-service/assets/66443399/76221f5e-c67e-4cee-bcc9-284c165068d3)
