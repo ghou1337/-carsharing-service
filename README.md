@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# -carsharing-service
-Developing car sharing service. 
 =======
 # Demo Carsharing Service
 Welcome to the repository of my demo carsharing service. This project focuses on creating a comprehensive carsharing platform with a range of features. Below, you'll find an overview of the functionalities and a glimpse into the service.
@@ -16,6 +13,3 @@ For an enhanced experience, every authenticated user gets their personalized pro
 
 ## Project Focus
 While the frontend plays a crucial role, my primary focus during development was on the backend. I dedicated efforts to implement robust backend functionalities, ensuring seamless interactions and reliable data management, including details about cars and user balances.
-
-Feel free to explore the repository and contribute to the further enhancement of this carsharing service!
->>>>>>> origin/solid-auth-v2-branch
