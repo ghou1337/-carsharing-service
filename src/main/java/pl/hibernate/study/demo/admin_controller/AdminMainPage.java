@@ -2,12 +2,11 @@ package pl.hibernate.study.demo.admin_controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.hibernate.study.demo.model.Vehicle;
+import pl.hibernate.study.demo.service.RentingVehicleService;
 import pl.hibernate.study.demo.service.VehicleService;
 import pl.hibernate.study.demo.validator.VehicleAdminRecordValidator;
 
@@ -22,11 +21,25 @@ public class AdminMainPage {
     @Autowired
     private VehicleAdminRecordValidator vehicleAdminRecordValidator;
 
+    @Autowired
+    private RentingVehicleService rentingVehicleService;
+
     @GetMapping("/add-new-car")
     public String addPage(@ModelAttribute("vehicle") @Valid Vehicle vehicle) {
         return "/admin_page/add-new-car-page";
     }
 
+    @GetMapping("/main")
+    public String mainPage(Model model) {
+        model.addAttribute("renting_vehicles", rentingVehicleService.getAllRentingCars());
+        return "/admin_page/admin-main-page";
+    }
+
+//    @DeleteMapping("/end-rent/{hash}")
+//    public String endRent() {String hash} {
+//
+//        return "redirect:/admin_page/admin-main-page";
+//    }
     @PostMapping("/add-new-car")
     public String addNewCar(@ModelAttribute("vehicle") @Valid Vehicle vehicle, BindingResult bindingResult) {
         vehicleAdminRecordValidator.validate(vehicle, bindingResult);

@@ -64,12 +64,14 @@
         </div>
     <div class="card-container">
         <div class="card" th:each="vehicle : ${vehicles}">
+            <div th:if="${errorBalanceMessages != null and errorBalanceMessages.containsKey(vehicle.getId())}" style="color: red;" class="message">
+                <p th:text="${errorBalanceMessages[vehicle.getId()]}">Error message</p>
+            </div>
             <div class="card-header" th:text="${vehicle.getCarBrand()}"></div>
             <div class="card-content" th:text="${vehicle.getPriceRent()} + '$ ' + ${vehicle.getCarYear()}"></div>
-            <div class="card-image"> <img th:src="${vehicle.getImageUrl()}"alt="Car Image"/></div>
-
+            <div class="card-image"> <img th:src="${vehicle.getImageUrl()}" alt="Car Image"/></div>
             <div class="card-action">
-                <form th:method="PATCH" th:action="@{main/{vehicleId}(vehicleId=${vehicle.getId()})}">
+                <form th:method="POST" th:action="@{main/{vehicleId}(vehicleId=${vehicle.getId()})}">
                     <input value="Rent a vehicle" type="submit" class="input-submit">
                 </form>
             </div>

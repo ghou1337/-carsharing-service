@@ -26,6 +26,9 @@ public class RentingVehicleService  {
     @Autowired
     private VehicleService vehicleService;
 
+    public List<RentingVehicle> getAllRentingCars() {
+        return rentingVehicleRepo.findAll();
+    }
     public List<Vehicle> getAllUserCars(User user) {
         return rentingVehicleRepo.getAllByUser(user)
                 .stream()
@@ -40,12 +43,11 @@ public class RentingVehicleService  {
     public void completeLeaseActualRentingTable(int carId, User user) {
         rentingVehicleRepo.deleteByVehicle_IdAndUser(carId, user); // delete renting car from "renting_vehicles" table
     }
-
     @Transactional
     public void rentCar(User user, int vehicleId) throws NotEnoughBalanceException {
         Vehicle vehicleById = vehicleService.getCarById(vehicleId);
-        float actualMoney = user.getMoney();
-        float priceRent = vehicleById.getPriceRent();
+        Float actualMoney = user.getMoney();
+        Float priceRent = vehicleById.getPriceRent();
         if (actualMoney >= priceRent) {
             user.setMoney(actualMoney - priceRent);
         } else {

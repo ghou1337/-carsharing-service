@@ -19,7 +19,7 @@ public class Vehicle {
     private String carBrand;
     @NotNull(message = "Price shouldn't be empty")
     @Column(name = "price_rent")
-    private Integer priceRent;
+    private Float priceRent;
     @NotNull(message = "Car year shouldn't be empty")
     @Column(name = "car_year")
     private int carYear;
@@ -46,7 +46,7 @@ public class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(int id, String carBrand, Integer priceRent, int carYear, String imageUrl, Boolean availability, String carClass, String carModel) {
+    public Vehicle(int id, String carBrand, Float priceRent, int carYear, String imageUrl, Boolean availability, String carClass, String carModel) {
         this.id = id;
         this.carBrand = carBrand;
         this.priceRent = priceRent;
@@ -73,11 +73,11 @@ public class Vehicle {
         this.carBrand = carBrand;
     }
 
-    public Integer getPriceRent() {
+    public Float getPriceRent() {
         return priceRent;
     }
 
-    public void setPriceRent(Integer priceRent) {
+    public void setPriceRent(Float priceRent) {
         this.priceRent = priceRent;
     }
 

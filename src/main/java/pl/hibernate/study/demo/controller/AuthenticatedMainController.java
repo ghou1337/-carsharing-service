@@ -17,7 +17,9 @@ import pl.hibernate.study.demo.service.exe.RentHistoryWasNotRecorded;
 import pl.hibernate.study.demo.service.search_filter.VehicleSearchFilterService;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/main")
@@ -59,20 +61,25 @@ public class AuthenticatedMainController {
         return "redirect:/main";
     }
 
-    @PatchMapping("/{vehicleId}")
-    public String startRent(@PathVariable("vehicleId") int carId, RedirectAttributes redirectAttributes) {
+    @PostMapping("/{vehicleId}")
+    public String startRent(@PathVariable("vehicleId") int carId, RedirectAttributes redirectAttributes) throws NotEnoughBalanceException{
         Vehicle rentingCar = vehicleService.getCarById(carId);
         try {
             rentingVehicleService.rentCar(getUser(), carId);
             vehicleService.setCarNotAvailable(carId);
             redirectAttributes.addFlashAttribute("success_message", "The car was successfully rented!");
+            try {
+                rentedVehicleHistoryService.startRentHistory(getUser(), rentingCar, getCarHash(carId)); // starting rent history record
+            } catch (RentHistoryWasNotRecorded e) {
+                throw new RuntimeException("Error: Car was rented but history table didn't record this action", e);
+            }
         } catch (NotEnoughBalanceException e) {
-            redirectAttributes.addFlashAttribute("error_message", e.getMessage() );
-        }
-        try {
-            rentedVehicleHistoryService.startRentHistory(getUser(), rentingCar, getCarHash(carId)); // starting rent history record
-        } catch (RentHistoryWasNotRecorded e) {
-            throw new RuntimeException("Error: Car was rented but history table didn't record this action", e);
+            Map<Integer, String> errorMessages = new HashMap<>();
+            errorMessages.put(carId, e.getMessage()); // Сначала добавляем сообщение в карту
+            redirectAttributes.addFlashAttribute("errorBalanceMessages", errorMessages); // Затем добавляем карту в redirectAttributes
+            return "redirect:/main";
+        } catch (RuntimeException e) {
+            // Обработка других RuntimeException, если необходимо
         }
         searchFilter = false;
         return "redirect:/main";
@@ -88,6 +95,11 @@ public class AuthenticatedMainController {
     }
 
     private String getCarHash(int carId) {
-        return rentingVehicleService.getRentingCarByCarIdAndUser(carId, getUser()).getHash();
+        String hash = rentingVehicleService.getRentingCarByCarIdAndUser(carId, getUser()).getHash();
+        if (hash != null ) {
+            return hash;
+        } else {
+            throw new RuntimeException("Error: Car hash wasn't found");
+        }
     }
 }
