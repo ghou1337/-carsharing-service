@@ -5,7 +5,7 @@ body {
 
 .main-content {
     display: flex;
-    justify-content: space-between; /* Распределяет пространство между блоками */
+    justify-content: space-between; /* Distributes space between blocks */
 }
 
 h1 {
@@ -76,11 +76,11 @@ tr:nth-child(even) {
 
 .card-container {
     display: flex;
-    flex-wrap: wrap; /* Разрешаем перенос карточек на следующий ряд */
-    gap: 20px; /* Расстояние между карточками */
-    max-width: 1200px; /* Максимальная ширина контейнера */
-    margin: 0 auto; /* Центрирование контейнера */
-    padding: 20px; /* Отступ вокруг контейнера */
+    flex-wrap: wrap; /* Allows cards to wrap to the next row */
+    gap: 20px; /* Distance between cards */
+    max-width: 1200px; /* Maximum container width */
+    margin: 0 auto; /* Centers the container */
+    padding: 20px; /* Padding around the container */
 }
 .card {
     display: flex;
@@ -99,7 +99,7 @@ tr:nth-child(even) {
 }
 .card-image {
     display: flex;
-    flex-grow: 1; /* Занимать доступное пространство между хедером и кнопкой */
+    flex-grow: 1; /* Takes up available space between header and button */
     justify-content: center;
     align-items: center;
 }
@@ -119,31 +119,31 @@ tr:nth-child(even) {
     cursor: pointer;
 }
 .card:hover {
-    transform: scale(1.05); /* Увеличение при наведении */
+    transform: scale(1.05); /* Enlarges on hover */
 }
 .card-content {
     padding: 10px;
     text-align: center;
-    flex-grow: 1; /* Занимать доступное пространство внутри карточки */
+    flex-grow: 1; /* Takes up available space inside the card */
 }
 NAVIGATION BAR
 
 .nav-bar {
     display: flex;
     justify-content: center;
-    background-color: #333; /* Цвет фона */
-    color: #fff; /* Цвет текста */
-    padding: 10px; /* Внутренний отступ */
+    background-color: #333; /* Background color */
+    color: #fff; /* Text color */
+    padding: 10px; /* Padding */
 }
 
 .nav-bar a {
-    text-decoration: none; /* Убираем стандартное подчеркивание ссылок */
-    color: #fff; /* Цвет текста ссылок */
-    margin: 0 10px; /* Горизонтальный отступ между ссылками */
+    text-decoration: none; /* Removes standard link underline */
+    color: #fff; /* Link text color */
+    margin: 0 10px; /* Horizontal spacing between links */
 }
 
 .nav-bar a:hover {
-    text-decoration: underline; /* Подчеркивание ссылки при наведении */
+    text-decoration: underline; /* Underlines link on hover */
 }
 
 .nav-bar ul {
@@ -187,39 +187,39 @@ NAVIGATION BAR
 
 .search-filter-input-container {
     display: flex;
-    flex-direction: column; /* Располагает инпуты вертикально */
+    flex-direction: column; /* Arranges inputs vertically */
 }
 
 .search-filter-input-container input {
-    margin-bottom: 10px; /* Добавляет вертикальный отступ между инпутами */
+    margin-bottom: 10px; /* Adds vertical spacing between inputs */
 }
 
 .search-filter-input-container {
-    width: 100%; /* Занимает всю доступную ширину слева */
-    margin-right: 20px; /* Добавляет отступ между блоками */
+    width: 100%; /* Takes up all available width on the left */
+    margin-right: 20px; /* Adds spacing between blocks */
 }
 
 .select-container {
-    width: 100%; /* Занимает всю доступную ширину слева */
-    margin-bottom: 10px; /* Добавляет отступ между блоками */
+    width: 100%; /* Takes up all available width on the left */
+    margin-bottom: 10px; /* Adds spacing between blocks */
 }
 
-/* Стили для самого выпадающего списка */
+/* Styles for the dropdown itself */
 .select-container select {
-    width: 100%; /* Занимает всю доступную ширину */
-    padding: 10px; /* Подберите подходящую высоту */
-    border: 1px solid #ccc; /* Граница для элемента */
-    border-radius: 5px; /* Закругленные углы */
+    width: 100%; /* Takes up all available width */
+    padding: 10px; /* Adjust to desired height */
+    border: 1px solid #ccc; /* Border for the element */
+    border-radius: 5px; /* Rounded corners */
 }
 
-/* Стили для опций в выпадающем списке */
+/* Styles for options in the dropdown */
 .select-container select option {
-    padding: 10px; /* Подберите подходящую высоту */
-    background-color: #fff; /* Цвет фона опций */
-    color: #333; /* Цвет текста опций */
+    padding: 10px; /* Adjust to desired height */
+    background-color: #fff; /* Option background color */
+    color: #333; /* Option text color */
 }
 
-/* Добавление отступа между опциями (по желанию) */
+/* Adding spacing between options (optional) */
 .select-container select option + option {
     margin-top: 5px;
 }
@@ -228,7 +228,7 @@ NAVIGATION BAR
 
 .rented-car-list {
     display: flex;
-    overflow-x: auto; /* Горизонтальная прокрутка, если объектов слишком много */
+    overflow-x: auto; /* Horizontal scroll if too many items */
 }
 
 .car-header {
@@ -241,11 +241,11 @@ NAVIGATION BAR
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    margin-right: 10px; /* Расстояние между объектами */
+    margin-right: 10px; /* Distance between items */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     text-align: center;
-    flex: 0 0 auto; /* Запрет увеличения размера объектов */
+    flex: 0 0 auto; /* Prevents size increase of items */
 }
 
 .car-brand {
