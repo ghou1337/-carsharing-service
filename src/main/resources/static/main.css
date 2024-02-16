@@ -126,7 +126,7 @@ tr:nth-child(even) {
     text-align: center;
     flex-grow: 1; /* Занимать доступное пространство внутри карточки */
 }
-/*NAVIGATION BAR*/
+NAVIGATION BAR
 
 .nav-bar {
     display: flex;
@@ -144,6 +144,43 @@ tr:nth-child(even) {
 
 .nav-bar a:hover {
     text-decoration: underline; /* Подчеркивание ссылки при наведении */
+}
+
+.nav-bar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333; /* Dark background */
+}
+
+.nav-bar li {
+    float: left;
+}
+
+.nav-bar li a {
+    display: block;
+    color: white; /* White text */
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.nav-bar li a:hover {
+    background-color: #111; /* Slightly lighter black on hover */
+}
+
+/* For the admin link, if you want to make it stand out */
+.nav-bar .admin-link {
+    background-color: #4CAF50; /* Green background for admin */
+    color: white;
+}
+
+/* Clear floats after the list */
+.nav-bar:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 /*SEARCH FILTER*/

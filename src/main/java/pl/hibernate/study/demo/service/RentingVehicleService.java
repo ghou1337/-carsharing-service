@@ -29,19 +29,16 @@ public class RentingVehicleService  {
     public List<RentingVehicle> getAllRentingCars() {
         return rentingVehicleRepo.findAll();
     }
-    public List<Vehicle> getAllUserCars(User user) {
-        return rentingVehicleRepo.getAllByUser(user)
-                .stream()
-                .map(RentingVehicle::getVehicle)
-                .collect(Collectors.toList());
+    public List<RentingVehicle> getAllUserCars(User user) {
+        return rentingVehicleRepo.getAllByUser(user);
     }
 
     public RentingVehicle getRentingCarByCarIdAndUser(int carId, User user){
         return rentingVehicleRepo.getByVehicle_IdAndUser_Id(carId, user.getId());
     }
     @Transactional
-    public void completeLeaseActualRentingTable(int carId, User user) {
-        rentingVehicleRepo.deleteByVehicle_IdAndUser(carId, user); // delete renting car from "renting_vehicles" table
+    public void completeLeaseActualRentingTable(String hash, User user) {
+        rentingVehicleRepo.deleteByHashAndUser(hash, user); // delete renting car from "renting_vehicles" table
     }
     @Transactional
     public void rentCar(User user, int vehicleId) throws NotEnoughBalanceException {
@@ -58,5 +55,13 @@ public class RentingVehicleService  {
         rentingVehicle.setUser(user);
         rentingVehicle.setHash(UUID.randomUUID().toString());
         rentingVehicleRepo.save(rentingVehicle);
+    }
+
+    public int getVehicleIdByHash(String hash) {
+        return rentingVehicleRepo.getRentingVehicleByHash(hash).getVehicle().getId();
+    }
+
+    public User getUserIdByCarHash(String hash) {
+        return rentingVehicleRepo.getRentingVehicleByHash(hash).getUser();
     }
 }

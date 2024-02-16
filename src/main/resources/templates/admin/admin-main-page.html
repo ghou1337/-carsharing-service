@@ -1,0 +1,52 @@
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/admin/admin-page-style.css}">
+  <title>Admin</title>
+</head>
+<body>
+<nav class="nav-bar">
+  <ul>
+    <li><strong>Admin panel</strong></li>
+  </ul>
+  <ul>
+    <li><a th:href="@{/main}">Main page</a></li>
+    <li><a th:href="@{/admin/add-car}">Adding car form</a></li>
+    <li><form th:action="@{/logout}" th:method="POST"><input type="submit" role="button" value="Sign Out"/></form></li>
+  </ul>
+</nav>
+<main class="main-container">
+  <div class="rented-car-history-table">
+    <table class="compact-table">
+      <thead>
+      <tr>
+        <th>Car brand</th>
+        <th>Car year</th>
+        <th>Price rent</th>
+        <th>Rent duration</th>
+        <th>Rent date</th>
+        <th>Costs</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="r_car : ${renting_vehicles}">
+        <td th:text="${r_car.getHash()}" class="car-brand"></td>
+        <td th:text="${r_car.getUser().username}" class="user"></td>
+        <td th:text="${r_car.getVehicle().carBrand}" class="user"></td>
+        <td th:text="${r_car.getVehicle().priceRent}" class="user"></td>
+        <td> <form th:method="DELETE" th:action="@{end-rent/{hash}(hash=${r_car.getHash()})}">
+          <input value="Complete the lease" type="submit" class="input-reject"/>
+        </form></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <footer class="container">
+    <small>
+      <a href="#">Polityka Prywatności</a> • <a href="#">Warunki Użytkowania</a>
+    </small>
+  </footer>
+</main>
+</body>
+</html>

@@ -9,26 +9,33 @@
     <link rel="stylesheet" th:href="@{main.css}"/>
 </head>
 <body>
-<div class="nav-bar">
-    <a th:href="@{/main}">Main page</a>
-    <a th:href="@{/profile}" >Your profile</a>
-    <a th:href="@{/about}">About us</a>
-</div>
-<div class="user-nav">
-    <h1>Hello, <label th:text="${user_data.getName()}"/></h1>
-    <div th:if="${error_message}" style="color: red;" class="message"><p th:text="${error_message}">message</p></div>
-    <div th:if="${success_message}" style="color: green;" class="message"><p th:text="${success_message}">message</p></div>
-    <h1>Your money: <span th:text="${user_data.getMoney()} + '$'"/></h1>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out" class="input-reject"/>
-    </form>
-</div>
+<header>
+    <nav class="nav-bar">
+        <ul>
+            <li><a th:href="@{/main}">Main page</a></li>
+            <li><a th:href="@{/profile}">Your profile</a></li>
+            <li><a th:href="@{/about}">About us</a></li>
+            <li><a th:if="${user_data.getRole() == 'ADMIN'}" class="admin-link" th:href="@{/admin/main}">Admin page</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <section class="user-nav">
+        <h1>Hello, <span th:text="${user_data.getName()}"></span></h1>
+        <div th:if="${error_message}" class="error-message" style="color: red;"><p th:text="${error_message}">Error message</p></div>
+        <div th:if="${success_message}" class="success-message" style="color: green;"><p th:text="${success_message}">Success message</p></div>
+        <h1>Your money: <span th:text="${user_data.getMoney()} + '$'"></span></h1>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Sign Out</button>
+        </form>
+    </section>
+</main>
 <div class="rented-car-list">
-    <div th:each="everycars: ${user_car}" class="car-item">
+    <div th:each="u_car: ${user_cars}" class="car-item">
         <div class="car-header">
-            <p th:text="${everycars.getCarBrand()}" class="car-brand"></p>
-            <img th:src="${everycars.getImageUrl()}" alt="Car Image" class="rented-car-image" />
-            <form th:method="DELETE" th:action="@{main/delete/{id}(id=${everycars.getId()})}">
+            <p th:text="${u_car.getVehicle().getCarBrand()}" class="car-brand"></p>
+            <img th:src="${u_car.getVehicle().getImageUrl()}" alt="Car Image" class="rented-car-image" />
+            <form th:method="DELETE" th:action="@{main/delete/{hash}(hash=${u_car.getHash()})}">
                 <input value="Complete the lease" type="submit" class="input-reject" />
             </form>
         </div>
@@ -64,8 +71,8 @@
         </div>
     <div class="card-container">
         <div class="card" th:each="vehicle : ${vehicles}">
-            <div th:if="${errorBalanceMessages != null and errorBalanceMessages.containsKey(vehicle.getId())}" style="color: red;" class="message">
-                <p th:text="${errorBalanceMessages[vehicle.getId()]}">Error message</p>
+            <div th:if="${errorBalanceMessage != null and errorBalanceMessage.containsKey(vehicle.getId())}" style="color: red;" class="message">
+                <p th:text="${errorBalanceMessage[vehicle.getId()]}">Error message</p>
             </div>
             <div class="card-header" th:text="${vehicle.getCarBrand()}"></div>
             <div class="card-content" th:text="${vehicle.getPriceRent()} + '$ ' + ${vehicle.getCarYear()}"></div>

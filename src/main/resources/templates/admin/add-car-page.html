@@ -1,0 +1,62 @@
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/admin/add-car-style.css}">
+  <title>Admin</title>
+</head>
+<body>
+<nav class="nav-bar">
+  <ul>
+    <li><strong>Admin car adding form</strong></li>
+  </ul>
+  <ul>
+    <li><a th:href="@{/main}">Main page</a></li>
+    <li><a th:href="@{/admin/main}">Admin panel</a></li>
+    <li><form th:action="@{/logout}" th:method="POST"><input type="submit" role="button" value="Sign Out"/></form></li>
+  </ul>
+</nav>
+<main class="main-container">
+  <div class="registration-form">
+    <h2>Add new car form</h2>
+    <form th:action="@{/admin/add-car}" th:method="POST" th:object="${vehicle}">
+      <div>
+        <label>Car brand:</label>
+        <input type="text" th:field="*{carBrand}">
+        <div style="color: red" th:if="${#fields.hasErrors('carBrand')}">Car brand error</div>
+      </div>
+      <div>
+        <label>Car class:</label>
+        <div style="color: red" th:if="${#fields.hasErrors('carClass')}">Car class error</div>
+        <select th:field="*{carClass}">
+          <option th:each="type : ${T(pl.hibernate.study.demo.model.enums.CarBodyTypes).values()}"
+                  th:value="${type}"
+                  th:text="${type.getCarBodyTypeValue()}"></option>
+        </select>
+      </div>
+      <div>
+        <label>Car model:</label>
+        <input type="text" th:field="*{carModel}">
+        <div style="color: red" th:if="${#fields.hasErrors('carModel')}">Car model error</div>
+      </div>
+      <div>
+        <label>Year of car:</label>
+        <input type="text" th:field="*{carYear}">
+        <div style="color: red" th:if="${#fields.hasErrors('carYear')}">Car year error</div>
+      </div>
+      <div>
+        <label>Price of rent:</label>
+        <input type="text" th:field="*{priceRent}">
+        <div style="color: red" th:if="${#fields.hasErrors('priceRent')}">Price of error</div>
+      </div>
+      <input type="submit" value="Register">
+    </form>
+  </div>
+  <footer class="container">
+    <small>
+      <a href="#">Polityka Prywatności</a> • <a href="#">Warunki Użytkowania</a>
+    </small>
+  </footer>
+</main>
+</body>
+</html>

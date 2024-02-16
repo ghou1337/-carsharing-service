@@ -19,7 +19,7 @@ public class VehicleRepoJpaTest {
 
     @Test
     void setCarNotAvailableDBTest() {
-        Vehicle vehicle = new Vehicle(0, "Brand", 150, 2023, "url", true, "class1", "model1");
+        Vehicle vehicle = new Vehicle(0, "Brand", 150f, 2023, "url", true, "class1", "model1");
         vehicleRepo.save(vehicle);
         vehicleRepo.setAvailabilityToFalse(vehicle.getId());
 
@@ -30,7 +30,7 @@ public class VehicleRepoJpaTest {
 
     @Test
     void setCarAvailableDBTest() {
-        Vehicle vehicle = new Vehicle(0, "Brand", 150, 2023, "url", false, "class1", "model1");
+        Vehicle vehicle = new Vehicle(0, "Brand", 150f, 2023, "url", false, "class1", "model1");
         vehicleRepo.save(vehicle);
         vehicleRepo.setAvailabilityToTrue(vehicle.getId());
 

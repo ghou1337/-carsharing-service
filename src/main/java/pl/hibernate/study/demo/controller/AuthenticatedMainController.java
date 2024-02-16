@@ -8,10 +8,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.hibernate.study.demo.model.User;
 import pl.hibernate.study.demo.model.Vehicle;
 import pl.hibernate.study.demo.model.VehicleSearchFilter;
-import pl.hibernate.study.demo.service.RentedVehicleHistoryService;
-import pl.hibernate.study.demo.service.RentingVehicleService;
-import pl.hibernate.study.demo.service.UserService;
-import pl.hibernate.study.demo.service.VehicleService;
+import pl.hibernate.study.demo.service.*;
 import pl.hibernate.study.demo.service.exe.NotEnoughBalanceException;
 import pl.hibernate.study.demo.service.exe.RentHistoryWasNotRecorded;
 import pl.hibernate.study.demo.service.search_filter.VehicleSearchFilterService;
@@ -30,6 +27,8 @@ public class AuthenticatedMainController {
     private final RentingVehicleService rentingVehicleService;
     private final RentedVehicleHistoryService rentedVehicleHistoryService;
     private final VehicleSearchFilterService vehicleSearchFilterService;
+
+    private final LeaseManagement leaseManagement;
     private Boolean searchFilter = false;
 
     private Boolean classFilter = false;
@@ -43,7 +42,7 @@ public class AuthenticatedMainController {
         model.addAttribute("search_filter_updated", vehicleSearchFilter);
         List<Vehicle> vehicles = (!searchFilter) ? vehicleService.getAllAvailableCars() : vehicleSearchFilterService.getAllCarsWithFilterBoundaries(vehicleSearchFilter);
         model.addAttribute("vehicles", vehicles);
-        model.addAttribute("user_car", rentingVehicleService.getAllUserCars(getUser()));
+        model.addAttribute("user_cars", rentingVehicleService.getAllUserCars(getUser()));
         model.addAttribute("user_data", getUser());
         return "main-authenticated-page";
     }
@@ -68,28 +67,24 @@ public class AuthenticatedMainController {
             rentingVehicleService.rentCar(getUser(), carId);
             vehicleService.setCarNotAvailable(carId);
             redirectAttributes.addFlashAttribute("success_message", "The car was successfully rented!");
-            try {
-                rentedVehicleHistoryService.startRentHistory(getUser(), rentingCar, getCarHash(carId)); // starting rent history record
-            } catch (RentHistoryWasNotRecorded e) {
-                throw new RuntimeException("Error: Car was rented but history table didn't record this action", e);
-            }
         } catch (NotEnoughBalanceException e) {
             Map<Integer, String> errorMessages = new HashMap<>();
-            errorMessages.put(carId, e.getMessage()); // Сначала добавляем сообщение в карту
-            redirectAttributes.addFlashAttribute("errorBalanceMessages", errorMessages); // Затем добавляем карту в redirectAttributes
+            errorMessages.put(carId, e.getMessage());
+            redirectAttributes.addFlashAttribute("errorBalanceMessage", errorMessages);
             return "redirect:/main";
-        } catch (RuntimeException e) {
-            // Обработка других RuntimeException, если необходимо
+        }
+        try {
+            rentedVehicleHistoryService.startRentHistory(getUser(), rentingCar, getCarHash(carId));
+        } catch (RentHistoryWasNotRecorded e) {
+            throw new RuntimeException("Error: Car was rented but history table didn't record this action", e);
         }
         searchFilter = false;
         return "redirect:/main";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String completeLease(@PathVariable("id") int carId) {
-        rentedVehicleHistoryService.completeLeaseHistoryRecord(getCarHash(carId));
-        rentingVehicleService.completeLeaseActualRentingTable(carId, getUser());
-        vehicleService.setCarAvailable(carId);
+    @DeleteMapping("/delete/{hash}")
+    public String completeLease(@PathVariable("hash") String hash) {
+        leaseManagement.completeLease(hash);
         searchFilter = false;
         return "redirect:/main";
     }

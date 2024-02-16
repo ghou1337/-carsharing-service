@@ -6,6 +6,15 @@
     <link rel="stylesheet" th:href="@{/profile-styles.css}">
 </head>
 <body>
+<header>
+    <nav class="nav-bar">
+        <ul>
+            <li><a th:href="@{/main}">Main page</a></li>
+            <li><a th:href="@{/profile}">Your profile</a></li>
+            <li><a th:href="@{/about}">About us</a></li>
+        </ul>
+    </nav>
+</header>
 <div class="user-profile">
     <a th:text="'You: ' + ${user.getName()}">Name</a>
     <a th:text="'Balance: ' + ${user.getMoney()} + '$'">Balance</a>

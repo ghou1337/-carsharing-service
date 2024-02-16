@@ -1,0 +1,133 @@
+body {
+    font-family: Tahoma, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/*NAVIGATION BAR*/
+
+.nav-bar {
+    background-color: #333; /* Dark background for the nav-bar */
+    overflow: hidden;
+    color: white;
+}
+
+.nav-bar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.nav-bar ul li {
+    padding: 10px 20px;
+}
+
+.nav-bar ul li:not(:first-child) {
+    border-left: 1px solid #555; /* Separator for the links */
+}
+
+.nav-bar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.nav-bar ul li a:hover, .nav-bar ul li a:focus {
+    background-color: #555; /* Hover state with a lighter dark */
+}
+
+.nav-bar ul li strong {
+    background-color: #4CAF50; /* Green background for admin panel text */
+    padding: 10px 20px;
+}
+
+.nav-bar form {
+    margin: 0;
+}
+
+.nav-bar input[type="submit"] {
+    border: none;
+    background-color: rgba(199, 17, 44, 0.07); /* Green background for the sign out button */
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-transform: uppercase; /* Optional: style preference */
+}
+
+/*REGISTRATION FORM*/
+.main-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.registration-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.registration-form h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.registration-form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.registration-form input[type="text"],
+.registration-form select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* So the padding doesn't affect the total width */
+    margin-bottom: 20px;
+}
+
+.registration-form input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.registration-form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.registration-form div {
+    position: relative;
+}
+
+.registration-form div .error {
+    color: red;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+footer.container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+footer.container a {
+    text-decoration: none;
+    color: #5c5c5c;
+    margin: 0 10px;
+}
+
+footer.container a:hover {
+    text-decoration: underline;
+}
