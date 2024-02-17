@@ -61,3 +61,55 @@ body {
 .compact-table {
     font-size: 14px;
 }
+
+/*NAVIGATION BAR*/
+
+.nav-bar {
+    background-color: #333; /* Dark background for the nav-bar */
+    overflow: hidden;
+    color: white;
+}
+
+.nav-bar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.nav-bar ul li {
+    padding: 10px 20px;
+}
+
+.nav-bar ul li:not(:first-child) {
+    border-left: 1px solid #555; /* Separator for the links */
+}
+
+.nav-bar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.nav-bar ul li a:hover, .nav-bar ul li a:focus {
+    background-color: #555; /* Hover state with a lighter dark */
+}
+
+.nav-bar ul li strong {
+    background-color: #4CAF50; /* Green background for admin panel text */
+    padding: 10px 20px;
+}
+
+.nav-bar form {
+    margin: 0;
+}
+
+.nav-bar input[type="submit"] {
+    border: none;
+    background-color: rgba(199, 17, 44, 0.07); /* Green background for the sign out button */
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-transform: uppercase; /* Optional: style preference */
+}

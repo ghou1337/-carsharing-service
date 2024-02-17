@@ -41,7 +41,9 @@ public class Vehicle {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehicle")
     private List<RentingVehicle> rentingVehicles;
 
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    private VehicleImage vehicleImage;
 
     public Vehicle() {
     }
@@ -127,5 +129,18 @@ public class Vehicle {
 
     public void setCarModel(String carModel) {
         this.carModel = carModel;
+    }
+
+    public VehicleImage getVehicleImage() {
+        return vehicleImage;
+    }
+
+    public void setVehicleImage(VehicleImage vehicleImage) {
+        this.vehicleImage = vehicleImage;
+    }
+
+    @Override
+    public String toString() {
+        return carBrand + carModel + carClass + carYear ;
     }
 }

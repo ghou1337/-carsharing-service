@@ -27,7 +27,8 @@
             <th>Car year</th>
             <th>Price rent</th>
             <th>Rent duration</th>
-            <th>Rent date</th>
+            <th>Start date</th>
+            <th>End date</th>
             <th>Costs</th>
         </tr>
         </thead>
@@ -38,7 +39,8 @@
             <td th:text="${rentedcar.getRentedCar().getCarYear()}">Year</td>
             <td th:text="${rentedcar.getRentedCar().getPriceRent()} + ' usd/hour'">Price</td>
             <td th:text="${rentedcar.getRentDuration()} + ' min'">Duration</td>
-            <td th:text="${rentedcar.getRentStartAtToString()} + ''">Duration</td>
+            <td th:text="${rentedcar.getRentStartAtToString()} + ''">Start date</td>
+            <td th:text="${rentedcar.getRentEndToString()} + ''">End date</td>
             <td th:text="${rentedcar.getRentCost()} + '$'">Costs</td>
         </tr>
         </tbody>

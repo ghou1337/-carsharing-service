@@ -26,7 +26,7 @@
         <div th:if="${success_message}" class="success-message" style="color: green;"><p th:text="${success_message}">Success message</p></div>
         <h1>Your money: <span th:text="${user_data.getMoney()} + '$'"></span></h1>
         <form th:action="@{/logout}" method="post">
-            <button type="submit">Sign Out</button>
+            <input type="submit" value="Sign Out" class="input-reject"/>
         </form>
     </section>
 </main>
@@ -76,7 +76,9 @@
             </div>
             <div class="card-header" th:text="${vehicle.getCarBrand()}"></div>
             <div class="card-content" th:text="${vehicle.getPriceRent()} + '$ ' + ${vehicle.getCarYear()}"></div>
-            <div class="card-image"> <img th:src="${vehicle.getImageUrl()}" alt="Car Image"/></div>
+            <div class="card-image">
+                <img th:src="@{/images/{id}(id=${vehicle.vehicleImage != null ? vehicle.vehicleImage.id : 'default'})}" alt="Car Image"/>
+            </div>
             <div class="card-action">
                 <form th:method="POST" th:action="@{main/{vehicleId}(vehicleId=${vehicle.getId()})}">
                     <input value="Rent a vehicle" type="submit" class="input-submit">

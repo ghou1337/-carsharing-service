@@ -94,9 +94,29 @@ public class RentedVehicleHistory {
     }
 
     public String getRentStartAtToString() {
-        String date = this.rentStartAt.toString();
-        date.replace("T", " ");
-        return date.replaceAll("\\.\\d+", "");
+        // Предполагается, что rentStartAt уже в формате LocalDateTime,
+        // если нет, его нужно сначала преобразовать из String.
+        LocalDateTime date = LocalDateTime.parse(this.rentStartAt.toString());
+
+        // Форматируем часы, минуты, секунды и дату в желаемый формат.
+        String formattedDate = String.format("%d:%d:%d:%d | %02d.%02d.%d",
+                date.getDayOfMonth(), date.getHour(), date.getMinute(), date.getSecond(),
+                date.getMonthValue(), date.getDayOfMonth(), date.getYear());
+
+        return formattedDate;
+    }
+
+    public String getRentEndToString() {
+        // Предполагается, что rentStartAt уже в формате LocalDateTime,
+        // если нет, его нужно сначала преобразовать из String.
+        LocalDateTime date = LocalDateTime.parse(this.rentCompletionAt.toString());
+
+        // Форматируем часы, минуты, секунды и дату в желаемый формат.
+        String formattedDate = String.format("%d:%d:%d:%d | %02d.%02d.%d",
+                date.getDayOfMonth(), date.getHour(), date.getMinute(), date.getSecond(),
+                date.getMonthValue(), date.getDayOfMonth(), date.getYear());
+
+        return formattedDate;
     }
 
     public void setRentDuration(Long rentDuration) {

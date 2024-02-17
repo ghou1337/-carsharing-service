@@ -19,7 +19,7 @@
 <main class="main-container">
   <div class="registration-form">
     <h2>Add new car form</h2>
-    <form th:action="@{/admin/add-car}" th:method="POST" th:object="${vehicle}">
+    <form th:action="@{/admin/add-car}" th:method="POST" th:object="${vehicle}" enctype="multipart/form-data" >
       <div>
         <label>Car brand:</label>
         <input type="text" th:field="*{carBrand}">
@@ -47,8 +47,12 @@
       <div>
         <label>Price of rent:</label>
         <input type="text" th:field="*{priceRent}">
-        <div style="color: red" th:if="${#fields.hasErrors('priceRent')}">Price of error</div>
+        <div style="color: red" th:if="${#fields.hasErrors('priceRent')}">Price error</div>
       </div>
+      <div>
+        <label>Image of car:</label>
+        <input type="file" name="file"/></div>
+        <div style="color: red" th:if="${message}" th:text="${message}">Image error</div>
       <input type="submit" value="Register">
     </form>
   </div>

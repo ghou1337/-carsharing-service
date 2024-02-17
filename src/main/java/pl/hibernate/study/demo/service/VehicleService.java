@@ -13,6 +13,9 @@ public class VehicleService {
     @Autowired
     private VehicleRepo vehicleRepo;
 
+    public List<Vehicle> getAllCars() {
+        return vehicleRepo.findAll();
+    }
     public List<Vehicle> getAllAvailableCars() {
         return vehicleRepo.getAllByAvailabilityIsTrue();
     }
