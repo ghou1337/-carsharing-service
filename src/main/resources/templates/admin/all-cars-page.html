@@ -31,6 +31,7 @@
           <th>Class</th>
           <th>Model</th>
           <th>Image</th>
+          <th>Manage</th>
         </tr>
         </thead>
         <tbody>
@@ -42,9 +43,12 @@
           <td th:text="${veh.getAvailability()}" class="user">Availability</td>
           <td th:text="${veh.getCarClass()}" class="user">Class</td>
           <td th:text="${veh.getCarModel()}" class="user">Model</td>
-          <td> <form  enctype="multipart/form-data" th:method="PATCH" th:action="@{update-image/{id}(id=${veh.getId()})}">
+          <td> <form enctype="multipart/form-data" th:method="PATCH" th:action="@{update-image/{id}(id=${veh.getId()})}">
             <input value="Update image" type="file" name="file" class="input-reject"/>
             <input value="Submit" type="submit" class="input-submit">
+          </form>
+          <td> <form th:method="POST" th:action="@{delete-car/{id}(id=${veh.getId()})}">
+            <input value="Delete car" type="submit" class="input-reject">
           </form>
           </td>
         </tr>

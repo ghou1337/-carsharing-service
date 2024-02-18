@@ -25,4 +25,5 @@ public interface RentedVehicleHistoryRepo extends JpaRepository <RentedVehicleHi
     @Transactional
     @Query("update RentedVehicleHistory rv set rv.rentDuration =?1 where rv.rentedCar.id = ?2")
     void saveRentDuration(Long rentDuration, int id);
+
 }

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.hibernate.study.demo.model.Vehicle;
 import pl.hibernate.study.demo.model.VehicleImage;
+import pl.hibernate.study.demo.service.RentedVehicleHistoryService;
 import pl.hibernate.study.demo.service.VehicleImageService;
 import pl.hibernate.study.demo.service.VehicleService;
 
@@ -21,6 +22,8 @@ public class AdminAllCarsController {
     private final VehicleService vehicleService;
 
     private final VehicleImageService vehicleImageService;
+
+    private final RentedVehicleHistoryService rentedVehicleHistoryService;
 
     @GetMapping("/all")
     public String allCarsPage(Model model) {
@@ -38,6 +41,18 @@ public class AdminAllCarsController {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", "Ошибка при загрузке файла: " + e.getMessage());
         }
+        return "redirect:/admin/all";
+    }
+
+    @PostMapping("/delete-car/{id}")
+    public String deleteCar(@PathVariable("id") int vehicleId, RedirectAttributes redirectAttributes) {
+        try {
+            vehicleService.deleteById(vehicleId);
+            redirectAttributes.addFlashAttribute("message", "Car was deleted successfully");
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("message", "Delete error");
+        }
+
         return "redirect:/admin/all";
     }
 }

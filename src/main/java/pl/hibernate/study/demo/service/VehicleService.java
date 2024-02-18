@@ -38,4 +38,9 @@ public class VehicleService {
         vehicle.setAvailability(true);
         vehicleRepo.save(vehicle); // save new car and make available
     }
+
+    @Transactional
+    public void deleteById(int id) {
+        vehicleRepo.deleteById(id);
+    }
 }
