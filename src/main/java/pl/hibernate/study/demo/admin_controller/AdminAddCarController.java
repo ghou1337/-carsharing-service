@@ -37,7 +37,6 @@ public class AdminAddCarController {
     @PostMapping("/add-car")
     public String addNewCar(@ModelAttribute("vehicle") @Valid Vehicle vehicle, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, BindingResult bindingResult) {
         vehicleAdminRecordValidator.validate(vehicle, bindingResult);
-        String imageName = null;
         if(bindingResult.hasErrors()){
             return "/admin/add-car-page";
         }
