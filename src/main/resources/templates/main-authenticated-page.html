@@ -34,7 +34,7 @@
     <div th:each="u_car: ${user_cars}" class="car-item">
         <div class="car-header">
             <p th:text="${u_car.getVehicle().getCarBrand()}" class="car-brand"></p>
-            <img th:src="${u_car.getVehicle().getImageUrl()}" alt="Car Image" class="rented-car-image" />
+            <img th:src="${u_car.getVehicle().getVehicleImage().getContent()}" alt="Car Image" class="rented-car-image"/>
             <form th:method="DELETE" th:action="@{main/delete/{hash}(hash=${u_car.getHash()})}">
                 <input value="Complete the lease" type="submit" class="input-reject" />
             </form>

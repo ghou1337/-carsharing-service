@@ -42,18 +42,11 @@ public class AdminAddCarController {
         }
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Пожалуйста, выберите файл для загрузки.");
-            return "redirect:uploadStatus";
+            return "redirect:/admin/add-car";
         }
         try {
-            VehicleImage vehicleImage = new VehicleImage();
-            vehicleImage.setName(vehicle.toString());
-            vehicleImage.setContent(file.getBytes());
-            vehicleImage.setContentType(file.getContentType());
-            vehicleImage.setSize(file.getSize());
-
-            vehicleImageService.newImage(vehicleImage);
-            vehicle.setVehicleImage(vehicleImage);
-            redirectAttributes.addFlashAttribute("message", "Файл успешно загружен и сохранен как " + vehicleImage.getName());
+            String imageName = vehicleImageService.uploadImage(file, vehicle);
+            redirectAttributes.addFlashAttribute("message", "Файл успешно загружен и сохранен как " + imageName);
         } catch (IOException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", "Ошибка при загрузке файла: " + e.getMessage());
@@ -62,15 +55,4 @@ public class AdminAddCarController {
         redirectAttributes.addFlashAttribute("message", "Upload has done successfully");
         return "redirect:/admin/add-car";
     }
-// Задаем путь и имя файла для сохранения
- //   String uploadDirectory = "src/main/resources/static/car_images/";
-//            imageName = (UUID.randomUUID() + ".png"); // Имя файла, в которое будет сохранено изображение
-//
-//            // Создаем объект File, указывающий на путь сохранения
-//            File outputFile = new File(uploadDirectory + imageName);
-//            // Thumbnails used to set the file size and determine the format
-//            Thumbnails.of(file.getInputStream())
-//                    .size(800, 600)
-//                    .outputFormat("png")
-//                    .toFile(outputFile);// Path
 }
