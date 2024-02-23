@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "vehicles")
 public class Vehicle {
+    @OneToOne
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -32,9 +33,11 @@ public class Vehicle {
     @Column(name = "availability")
     private Boolean availability;
 
+    @NotEmpty(message = "Car class shouldn't be empty")
     @Column(name = "car_class")
     private String carClass;
 
+    @NotEmpty(message = "Car model shouldn't be empty")
     @Column(name = "car_model")
     private String carModel;
 

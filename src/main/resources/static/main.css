@@ -160,7 +160,7 @@ NAVIGATION BAR
 
 .nav-bar li a {
     display: block;
-    color: white; /* White text */
+    color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -170,13 +170,11 @@ NAVIGATION BAR
     background-color: #111; /* Slightly lighter black on hover */
 }
 
-/* For the admin link, if you want to make it stand out */
 .nav-bar .admin-link {
     background-color: #4CAF50; /* Green background for admin */
     color: white;
 }
 
-/* Clear floats after the list */
 .nav-bar:after {
     content: "";
     display: table;
@@ -229,12 +227,14 @@ NAVIGATION BAR
 .rented-car-list {
     display: flex;
     overflow-x: auto; /* Horizontal scroll if too many items */
+    align-items: flex-start; /* Align items to the top */
 }
 
 .car-header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 10px; /* Adds some space below the car image */
 }
 
 .car-item {
@@ -246,6 +246,7 @@ NAVIGATION BAR
     background-color: #fff;
     text-align: center;
     flex: 0 0 auto; /* Prevents size increase of items */
+    width: 200px; /* Fixed width for each car item */
 }
 
 .car-brand {
@@ -254,8 +255,10 @@ NAVIGATION BAR
 }
 
 .rented-car-image {
-    max-width: 100px;
-    max-height: 100px;
+    width: 100%; /* Allows the image to fill the width of the car-header */
+    height: 150px; /* Fixed height for images */
+    object-fit: contain; /* Ensures the image is scaled properly within the dimensions */
+    margin-bottom: 20px; /* Space below the image */
 }
 
 
