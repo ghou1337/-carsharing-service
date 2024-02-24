@@ -35,9 +35,12 @@
         <td th:text="${r_car.getUser().username}" class="user"></td>
         <td th:text="${r_car.getVehicle().carBrand}" class="user"></td>
         <td th:text="${r_car.getVehicle().priceRent}" class="user"></td>
-        <td> <form th:method="DELETE" th:action="@{end-rent/{hash}(hash=${r_car.getHash()})}">
-          <input value="Complete the lease" type="submit" class="input-reject"/>
-        </form></td>
+        <td>
+          <form th:method="DELETE" th:action="@{end-rent/{hash}(hash=${r_car.getHash()})}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input value="Complete the lease" type="submit" class="input-reject"/>
+          </form>
+        </td>
       </tr>
       </tbody>
     </table>

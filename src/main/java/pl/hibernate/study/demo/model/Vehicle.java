@@ -13,11 +13,10 @@ import java.util.List;
 @Entity
 @Table(name = "vehicles")
 public class Vehicle {
-    @OneToOne
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private int id;
     @NotEmpty(message = "Car brand shouldn't be empty")
     @Column(name = "car_brand")
     private String carBrand;

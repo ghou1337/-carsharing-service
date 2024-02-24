@@ -44,6 +44,7 @@
           <td th:text="${veh.getCarClass()}" class="user">Class</td>
           <td th:text="${veh.getCarModel()}" class="user">Model</td>
           <td> <form enctype="multipart/form-data" th:method="PATCH" th:action="@{update-image/{id}(id=${veh.getId()})}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             <input value="Update image" type="file" name="file" class="input-reject"/>
             <input value="Submit" type="submit" class="input-submit">
           </form>

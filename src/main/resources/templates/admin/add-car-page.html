@@ -20,6 +20,7 @@
   <div class="registration-form">
     <h2>Add new car form</h2>
     <form th:action="@{/admin/add-car}" th:method="POST" th:object="${vehicle}" enctype="multipart/form-data" >
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
       <div>
         <label>Car brand:</label>
         <input type="text" th:field="*{carBrand}">
