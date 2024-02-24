@@ -3,13 +3,10 @@ package pl.hibernate.study.demo.admin_controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.hibernate.study.demo.model.Vehicle;
 import pl.hibernate.study.demo.service.LeaseManagement;
 import pl.hibernate.study.demo.service.RentingVehicleService;
-import pl.hibernate.study.demo.service.VehicleService;
-import pl.hibernate.study.demo.validator.VehicleAdminRecordValidator;
 
 import javax.validation.Valid;
 

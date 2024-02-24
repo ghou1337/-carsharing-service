@@ -18,6 +18,9 @@ public class VehicleAdminRecordValidator implements Validator {
         if (vehicle.getCarBrand() == null || vehicle.getCarBrand().isEmpty()) {
             errors.rejectValue("carBrand", "carBrand.required", "Car brand is required.");
         }
+        if (vehicle.getCarClass() == null || vehicle.getCarClass().isEmpty()) {
+            errors.rejectValue("carClass", "carClass.required", "Car class is required.");
+        }
         if (vehicle.getCarYear() == null) {
             errors.rejectValue("carYear", "carYear.required", "Car year is required and");
         }
