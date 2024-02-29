@@ -8,6 +8,7 @@ import pl.hibernate.study.demo.model.RentingVehicle;
 import pl.hibernate.study.demo.model.User;
 import pl.hibernate.study.demo.model.Vehicle;
 import pl.hibernate.study.demo.repos.RentingVehicleRepo;
+import pl.hibernate.study.demo.service.exe.HashNotFoundException;
 import pl.hibernate.study.demo.service.exe.NotEnoughBalanceException;
 import pl.hibernate.study.demo.service.exe.RentHistoryWasNotRecorded;
 
@@ -36,6 +37,15 @@ public class RentingVehicleService  {
     public RentingVehicle getRentingCarByCarIdAndUser(int carId, User user){
         return rentingVehicleRepo.getByVehicle_IdAndUser_Id(carId, user.getId());
     }
+
+    public int getVehicleIdByHash(String hash) {
+        return rentingVehicleRepo.getRentingVehicleByHash(hash).getVehicle().getId();
+    }
+
+    public User getRentingUserByCarHash(String hash) {
+        return rentingVehicleRepo.getRentingVehicleByHash(hash).getUser();
+    }
+
     @Transactional
     public void completeLeaseActualRentingTable(String hash, User user) {
         rentingVehicleRepo.deleteByHashAndUser(hash, user); // delete renting car from "renting_vehicles" table
@@ -57,11 +67,24 @@ public class RentingVehicleService  {
         rentingVehicleRepo.save(rentingVehicle);
     }
 
-    public int getVehicleIdByHash(String hash) {
-        return rentingVehicleRepo.getRentingVehicleByHash(hash).getVehicle().getId();
+    public int completeLease(String hash, User user) {
+        try {
+            int carId = getVehicleIdByHash(hash);
+            completeLeaseActualRentingTable(hash, user);
+            return carId;
+        } catch (HashNotFoundException e) {
+            throw new HashNotFoundException("Erorr: Hash wasn't found");
+        }
     }
 
-    public User getUserIdByCarHash(String hash) {
-        return rentingVehicleRepo.getRentingVehicleByHash(hash).getUser();
+    public int completeLeaseByAdmin(String carHash, User adminUser) {
+        int carId = getVehicleIdByHash(carHash);
+        User rentingUser = getRentingUserByCarHash(carHash);
+        try {
+            completeLeaseActualRentingTable(carHash, rentingUser);
+        } catch (HashNotFoundException e) {
+            throw new HashNotFoundException("Erorr: Hash wasn't found");
+        }
+        return carId;
     }
 }

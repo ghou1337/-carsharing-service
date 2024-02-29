@@ -30,7 +30,7 @@ class UserServiceTests {
     @MockBean
     private UserRepo userRepo;
 
-    @Mock
+    @MockBean
     private PasswordEncoder passwordEncoder;
 
     private User mockUser;

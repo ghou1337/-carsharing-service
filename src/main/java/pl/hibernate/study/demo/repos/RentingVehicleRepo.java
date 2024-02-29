@@ -14,8 +14,9 @@ public interface RentingVehicleRepo extends JpaRepository <RentingVehicle, Integ
     List<RentingVehicle> getAllByUser(User user);
 
     RentingVehicle getByVehicle_IdAndUser_Id(int carId, int userId);
-    @Transactional
-    void deleteByHashAndUser(String hash, User user);
 
     RentingVehicle getRentingVehicleByHash(String hash);
+
+    @Transactional
+    void deleteByHashAndUser(String hash, User user);
 }

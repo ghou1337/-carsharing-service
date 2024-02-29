@@ -23,8 +23,6 @@ public class AdminAllCarsController {
 
     private final VehicleImageService vehicleImageService;
 
-    private final RentedVehicleHistoryService rentedVehicleHistoryService;
-
     @GetMapping("/all")
     public String allCarsPage(Model model) {
         model.addAttribute("vehicles", vehicleService.getAllCars());

@@ -9,6 +9,7 @@ import pl.hibernate.study.demo.model.User;
 import pl.hibernate.study.demo.model.Vehicle;
 import pl.hibernate.study.demo.model.VehicleSearchFilter;
 import pl.hibernate.study.demo.service.*;
+import pl.hibernate.study.demo.service.exe.HashNotFoundException;
 import pl.hibernate.study.demo.service.exe.NotEnoughBalanceException;
 import pl.hibernate.study.demo.service.exe.RentHistoryWasNotRecorded;
 import pl.hibernate.study.demo.service.search_filter.VehicleSearchFilterService;
@@ -27,8 +28,6 @@ public class AuthenticatedMainController {
     private final RentingVehicleService rentingVehicleService;
     private final RentedVehicleHistoryService rentedVehicleHistoryService;
     private final VehicleSearchFilterService vehicleSearchFilterService;
-
-    private final LeaseManagement leaseManagement;
     private Boolean searchFilter = false;
 
     private Boolean classFilter = false;
@@ -73,28 +72,19 @@ public class AuthenticatedMainController {
             redirectAttributes.addFlashAttribute("errorBalanceMessage", errorMessages);
             return "redirect:/main";
         }
-        try {
-            rentedVehicleHistoryService.startRentHistory(getUser(), rentingCar, getCarHash(carId));
-        } catch (RentHistoryWasNotRecorded e) {
-            throw new RuntimeException("Error: Car was rented but history table didn't record this action", e);
-        }
+        rentedVehicleHistoryService.startRentHistory(getUser(), rentingCar, rentingVehicleService.getRentingCarByCarIdAndUser(carId,getUser()).getHash());
         searchFilter = false;
         return "redirect:/main";
     }
 
     @DeleteMapping("/delete/{hash}")
     public String completeLease(@PathVariable("hash") String hash) {
-        leaseManagement.completeLease(hash);
+        //leaseManagement.completeLease(hash);
+        int carId = rentingVehicleService.completeLease(hash, getUser());
+        rentedVehicleHistoryService.completeLeaseHistoryRecord(hash); // в контрол
+        vehicleService.setCarAvailable(carId);
+
         searchFilter = false;
         return "redirect:/main";
-    }
-
-    private String getCarHash(int carId) {
-        String hash = rentingVehicleService.getRentingCarByCarIdAndUser(carId, getUser()).getHash();
-        if (hash != null ) {
-            return hash;
-        } else {
-            throw new RuntimeException("Error: Car hash wasn't found");
-        }
     }
 }

@@ -1,4 +1,4 @@
-package pl.hibernate.study.demo.service;
+package pl.hibernate.study.demo.repos;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +19,26 @@ public class VehicleRepoJpaTest {
 
     @Test
     void setCarNotAvailableDBTest() {
-        Vehicle vehicle = new Vehicle(0, "Brand", 150f, 2023, "url", true, "class1", "model1");
+        Vehicle vehicle = new Vehicle(
+                0,
+                "Brand",
+                150f,
+                2023,
+                true,
+                "class1",
+                "model1");
         vehicleRepo.save(vehicle);
         vehicleRepo.setAvailabilityToFalse(vehicle.getId());
 
         Vehicle updatedVehicle = vehicleRepo.findById(vehicle.getId()).orElse(null);
 
-        assertFalse(updatedVehicle != null && updatedVehicle.getAvailability());
+        assertTrue(updatedVehicle != null);
+        assertFalse(updatedVehicle.getAvailability());
     }
 
     @Test
     void setCarAvailableDBTest() {
-        Vehicle vehicle = new Vehicle(0, "Brand", 150f, 2023, "url", false, "class1", "model1");
+        Vehicle vehicle = new Vehicle(0, "Brand", 150f, 2023, false, "class1", "model1");
         vehicleRepo.save(vehicle);
         vehicleRepo.setAvailabilityToTrue(vehicle.getId());
 

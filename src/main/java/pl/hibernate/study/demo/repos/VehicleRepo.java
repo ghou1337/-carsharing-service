@@ -10,7 +10,7 @@ import pl.hibernate.study.demo.model.Vehicle;
 
 import java.util.List;
 @Repository
-public interface VehicleRepo extends JpaRepository<Vehicle, Integer>, JpaSpecificationExecutor<Vehicle> {
+public interface VehicleRepo extends JpaRepository<Vehicle, Integer> {
     @Transactional
     @Modifying
     @Query("UPDATE Vehicle v SET v.availability = false WHERE v.id = ?1")

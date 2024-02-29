@@ -5,8 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.hibernate.study.demo.model.Vehicle;
-import pl.hibernate.study.demo.service.LeaseManagement;
-import pl.hibernate.study.demo.service.RentingVehicleService;
+import pl.hibernate.study.demo.service.*;
 
 import javax.validation.Valid;
 
@@ -17,7 +16,11 @@ public class AdminMainController {
 
     private final RentingVehicleService rentingVehicleService;
 
-    private final LeaseManagement leaseManagement;
+    private final RentedVehicleHistoryService rentedVehicleHistoryService;
+
+    private final VehicleService vehicleService;
+
+    private final UserService userService;
 
     @GetMapping("/main")
     public String mainPage(Model model, Vehicle vehicle) {
@@ -28,7 +31,12 @@ public class AdminMainController {
 
     @DeleteMapping("/end-rent/{hash}")
     public String completeLeaseByAdmin(@PathVariable("hash") String hash) {
-        leaseManagement.completeLeaseByAdmin(hash);
+        //leaseManagement.completeLeaseByAdmin(hash);
+        if("ADMIN".equals(userService.getAuthenticatedUser().getRole())) {
+            int carId = rentingVehicleService.completeLeaseByAdmin(hash, userService.getAuthenticatedUser());
+            rentedVehicleHistoryService.completeLeaseHistoryRecord(hash);
+            vehicleService.setCarAvailable(carId);
+        }
         return "redirect:/admin/main";
     }
 

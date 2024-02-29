@@ -26,8 +26,6 @@ public class Vehicle {
     @NotNull(message = "Car year shouldn't be empty")
     @Column(name = "car_year")
     private Integer carYear;
-    @Column(name = "image_url")
-    private String imageUrl;
 
     @Column(name = "availability")
     private Boolean availability;
@@ -53,12 +51,11 @@ public class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(int id, String carBrand, Float priceRent, int carYear, String imageUrl, Boolean availability, String carClass, String carModel) {
+    public Vehicle(int id, String carBrand, Float priceRent, int carYear, Boolean availability, String carClass, String carModel) {
         this.id = id;
         this.carBrand = carBrand;
         this.priceRent = priceRent;
         this.carYear = carYear;
-        this.imageUrl = imageUrl;
         this.availability = availability;
         this.carClass = carClass;
         this.carModel = carModel;

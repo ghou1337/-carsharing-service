@@ -31,7 +31,7 @@
     </section>
 </main>
 <div class="rented-car-list">
-    <div th:each="u_car: ${user_cars}" class="car-item">
+    <div th:each="u_car: ${user_cars}" class="car-item" th:id="'renting-car-id:' + ${u_car.getVehicle().getId()}">
         <div class="car-header">
             <p th:text="${u_car.getVehicle().getCarBrand()}" class="car-brand"></p>
             <img th:src="@{/images/{id}(id=${u_car.getVehicle().getVehicleImage() != null ? u_car.getVehicle().getVehicleImage().getId() : 'default'})}" alt="Car Image" class="rented-car-image"/>
@@ -70,7 +70,7 @@
             </form>
         </div>
     <div class="card-container">
-        <div class="card" th:each="vehicle : ${vehicles}">
+        <div class="card" th:each="vehicle : ${vehicles}" th:id="'car-id:' + ${vehicle.getId()}">
             <div th:if="${errorBalanceMessage != null and errorBalanceMessage.containsKey(vehicle.getId())}" style="color: red;" class="message">
                 <p th:text="${errorBalanceMessage[vehicle.getId()]}">Error message</p>
             </div>

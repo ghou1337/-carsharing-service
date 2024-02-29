@@ -42,8 +42,8 @@ public class VehicleServiceTests {
 
     @Test
     void getAllCarsTest() {
-        mockVehicle0 = new Vehicle(0, "Brand", 150f, 2023, "url", true, "class1", "model1");
-        mockVehicle1 = new Vehicle(1, "Brand2", 1000f, 2048, "url", true, "class2", "model2");
+        mockVehicle0 = new Vehicle(0, "Brand", 150f, 2023, true, "class1", "model1");
+        mockVehicle1 = new Vehicle(1, "Brand2", 1000f, 2048, true, "class2", "model2");
 
         mockVehiclesList = new ArrayList<>();
         mockVehiclesList.add(mockVehicle0);
